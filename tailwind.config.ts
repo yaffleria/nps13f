@@ -9,6 +9,24 @@ const config: Config = {
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          '"Pretendard"',
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          '"Segoe UI"',
+          "Roboto",
+          '"Helvetica Neue"',
+          "Arial",
+          "sans-serif",
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+          '"Noto Color Emoji"',
+        ],
+      },
       colors: {
         background: "#101012",
         foreground: "#ffffff",
