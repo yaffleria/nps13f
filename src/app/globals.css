@@ -13,143 +13,25 @@
   src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
 }
 
-/* Core theme configuration */
 @theme {
-  /* Font families */
-  --font-sans:
-    "Pretendard Variable", var(--font-space-grotesk), ui-sans-serif, system-ui,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
-
-  /* Colors */
-  /* Custom orange theme - Primary: #FFA500 */
-  --color-primary-50: oklch(0.97 0.03 75);
-  --color-primary-100: oklch(0.93 0.06 75);
-  --color-primary-200: oklch(0.87 0.09 75);
-  --color-primary-300: oklch(0.8 0.12 75);
-  --color-primary-400: oklch(0.75 0.15 75); /* #FFA500 */
-  --color-primary-500: oklch(0.68 0.13 75); /* #DB9D00 */
-  --color-primary-600: oklch(0.58 0.13 75); /* #B38000 */
-  --color-primary-700: oklch(0.48 0.11 75);
-  --color-primary-800: oklch(0.35 0.08 75); /* #614500 */
-  --color-primary-900: oklch(0.28 0.06 75);
-  --color-primary-950: oklch(0.18 0.04 75);
-
-  --color-gray-50: oklch(0.985 0.002 247.839);
-  --color-gray-100: oklch(0.967 0.003 264.542);
-  --color-gray-200: oklch(0.928 0.006 264.531);
-  --color-gray-300: oklch(0.872 0.01 258.338);
-  --color-gray-400: oklch(0.707 0.022 261.325);
-  --color-gray-500: oklch(0.551 0.027 264.364);
-  --color-gray-600: oklch(0.446 0.03 256.802);
-  --color-gray-700: oklch(0.373 0.034 259.733);
-  --color-gray-800: oklch(0.278 0.033 256.848);
-  --color-gray-900: oklch(0.21 0.034 264.665);
-  --color-gray-950: oklch(0.13 0.028 261.692);
-
-  /* Line heights */
-  --line-height-11: 2.75rem;
-  --line-height-12: 3rem;
-  --line-height-13: 3.25rem;
-  --line-height-14: 3.5rem;
-
-  /* Z-index values */
-  --z-60: 60;
-  --z-70: 70;
-  --z-80: 80;
+  --font-sans: "Pretendard Variable", sans-serif;
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-*/
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-
-  a,
-  button {
-    outline-color: var(--color-primary-500);
-  }
-
-  a:focus-visible,
-  button:focus-visible {
-    outline: 2px solid;
-    border-radius: var(--radius-sm);
-    outline-color: var(--color-primary-500);
+    border-color: var(--color-gray-800, currentColor);
   }
 }
 
-@layer utilities {
-  .prose {
-    & a {
-      color: var(--color-primary-500);
-      &:hover {
-        color: var(--color-primary-600);
-      }
-      & code {
-        color: var(--color-primary-400);
-      }
-    }
-    & :where(h1, h2) {
-      font-weight: 700;
-      letter-spacing: var(--tracking-tight);
-    }
-    & h3 {
-      font-weight: 600;
-    }
-    & :where(code):not(pre code) {
-      color: var(--color-indigo-500);
-    }
-  }
-
-  .prose-invert {
-    & a {
-      color: var(--color-primary-500);
-      &:hover {
-        color: var(--color-primary-400);
-      }
-      & code {
-        color: var(--color-primary-400);
-      }
-    }
-    & :where(h1, h2, h3, h4, h5, h6) {
-      color: var(--color-gray-100);
-    }
-  }
-}
-
-.task-list-item::before {
-  @apply hidden;
-}
-
-.task-list-item {
-  @apply list-none;
-}
-
-.footnotes {
-  @apply mt-12 border-t border-gray-200 pt-8 dark:border-gray-700;
-}
-
-.data-footnote-backref {
-  @apply no-underline;
-}
-
-.csl-entry {
-  @apply my-5;
-}
-
+/* Utilities */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
