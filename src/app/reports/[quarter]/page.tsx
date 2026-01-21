@@ -255,12 +255,12 @@ export default async function ReportPage({ params }: ReportPageProps) {
 
             {/* 인사이트 카드 */}
             {insights.length > 0 && (
-              <div className="mb-8 p-5 bg-surface/50 rounded-2xl border border-border">
-                <h2 className="text-lg font-bold mb-3 flex items-center gap-2">
+              <div className="mb-8 px-4 bg-surface/50 rounded-2xl border border-border">
+                <h2 className="text-lg mt-4 font-bold mb-3 flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-accent" />
                   이번 분기 주요 하이라이트
                 </h2>
-                <ul className="space-y-2">
+                <ul className="space-y-2 mb-4">
                   {insights.map((insight, i) => (
                     <li key={i} className="flex items-start gap-2 text-secondary">
                       {insight.type === "top_buy" ? (
