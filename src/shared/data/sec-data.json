@@ -741,8 +741,8 @@
         "sector": "Healthcare"
       },
       {
-        "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "symbol": "GOOGL",
+        "securityName": "Alphabet Inc. Class A",
         "cusip": "02079K107",
         "shares": 10185776,
         "value": 2480745745000,
@@ -757,7 +757,7 @@
       },
       {
         "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "securityName": "Alphabet Inc. Class C",
         "cusip": "02079K305",
         "shares": 11947797,
         "value": 2904509451000,
@@ -8999,8 +8999,8 @@
         "sector": "Healthcare"
       },
       {
-        "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "symbol": "GOOGL",
+        "securityName": "Alphabet Inc. Class A",
         "cusip": "02079K107",
         "shares": 9872626,
         "value": 1751305126000,
@@ -9015,7 +9015,7 @@
       },
       {
         "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "securityName": "Alphabet Inc. Class C",
         "cusip": "02079K305",
         "shares": 11584502,
         "value": 2041536787000,
@@ -17046,8 +17046,8 @@
         "sector": "Healthcare"
       },
       {
-        "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "symbol": "GOOGL",
+        "securityName": "Alphabet Inc. Class A",
         "cusip": "02079K107",
         "shares": 9892036,
         "value": 1545432784000,
@@ -17062,7 +17062,7 @@
       },
       {
         "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "securityName": "Alphabet Inc. Class C",
         "cusip": "02079K305",
         "shares": 11523842,
         "value": 1782046927000,
@@ -25227,8 +25227,8 @@
         "sector": "Healthcare"
       },
       {
-        "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "symbol": "GOOGL",
+        "securityName": "Alphabet Inc. Class A",
         "cusip": "02079K107",
         "shares": 9632216,
         "value": 1834359215000,
@@ -25243,7 +25243,7 @@
       },
       {
         "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "securityName": "Alphabet Inc. Class C",
         "cusip": "02079K305",
         "shares": 11156601,
         "value": 2111944569000,
@@ -33391,8 +33391,8 @@
         "sector": "Healthcare"
       },
       {
-        "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "symbol": "GOOGL",
+        "securityName": "Alphabet Inc. Class A",
         "cusip": "02079K107",
         "shares": 9903537,
         "value": 1655772351000,
@@ -33407,7 +33407,7 @@
       },
       {
         "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "securityName": "Alphabet Inc. Class C",
         "cusip": "02079K305",
         "shares": 11282407,
         "value": 1871187201000,
@@ -41059,8 +41059,8 @@
         "sector": "Healthcare"
       },
       {
-        "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "symbol": "GOOGL",
+        "securityName": "Alphabet Inc. Class A",
         "cusip": "02079K107",
         "shares": 8684866,
         "value": 1592978122000,
@@ -41075,7 +41075,7 @@
       },
       {
         "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "securityName": "Alphabet Inc. Class C",
         "cusip": "02079K305",
         "shares": 9831748,
         "value": 1790852898000,
@@ -49278,8 +49278,8 @@
         "sector": "Healthcare"
       },
       {
-        "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "symbol": "GOOGL",
+        "securityName": "Alphabet Inc. Class A",
         "cusip": "02079K107",
         "shares": 8692497,
         "value": 1323519593000,
@@ -49294,7 +49294,7 @@
       },
       {
         "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "securityName": "Alphabet Inc. Class C",
         "cusip": "02079K305",
         "shares": 9750868,
         "value": 1471698507000,
@@ -56912,8 +56912,8 @@
         "sector": "Healthcare"
       },
       {
-        "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "symbol": "GOOGL",
+        "securityName": "Alphabet Inc. Class A",
         "cusip": "02079K107",
         "shares": 8621727,
         "value": 1215059986000,
@@ -56928,7 +56928,7 @@
       },
       {
         "symbol": "GOOG",
-        "securityName": "Alphabet Inc.",
+        "securityName": "Alphabet Inc. Class C",
         "cusip": "02079K305",
         "shares": 9607905,
         "value": 1342128249000,

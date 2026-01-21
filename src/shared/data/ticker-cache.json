@@ -1590,8 +1590,8 @@
     "sector": "Healthcare"
   },
   "02079K107": {
-    "symbol": "GOOG",
-    "securityName": "Alphabet Inc.",
+    "symbol": "GOOGL",
+    "securityName": "Alphabet Inc. Class A",
     "sector": "Communication Services"
   },
   "009066101": {
@@ -1686,7 +1686,7 @@
   },
   "02079K305": {
     "symbol": "GOOG",
-    "securityName": "Alphabet Inc.",
+    "securityName": "Alphabet Inc. Class C",
     "sector": "Communication Services"
   },
   "037833100": {
