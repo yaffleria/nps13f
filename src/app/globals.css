@@ -1,29 +1,40 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/forms";
-@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-/* Pretendard Variable Font */
-@font-face {
-  font-family: "Pretendard Variable";
-  font-weight: 45 920;
-  font-style: normal;
-  font-display: swap;
-  src: url("/fonts/PretendardVariable.woff2") format("woff2-variations");
+/* Custom Theme Variables */
+:root {
+  --background: #191f28;
+  --foreground: #ffffff;
+  --surface: #202632;
+  --primary: #3182f6; /* Toss Blue */
+  --secondary: #b0b8c1; /* Toss Gray */
+  --accent: #f04452; /* Toss Red */
+  --muted: #4e5968;
+  --border: #333d4b;
+  --success: #34c759; /* Green */
+  --negative: #ff3b30; /* Red */
 }
 
 @theme {
-  --font-sans: "Pretendard Variable", sans-serif;
+  --font-sans: "Pretendard Variable", "Inter", sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-success: var(--success);
+  --color-negative: var(--negative);
 }
 
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-800, currentColor);
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    @apply antialiased;
   }
 }
 

@@ -6,8 +6,7 @@ import path from "path";
 const SEC_SUBMISSIONS_URL = "https://data.sec.gov";
 const SEC_ARCHIVES_URL = "https://www.sec.gov";
 const NPS_CIK = "0001608046"; // National Pension Service (Korea) CIK
-const SEC_USER_AGENT =
-  "NPS_Portfolio_Tracker/1.0 (contact@nps-tracker-demo.com)";
+const SEC_USER_AGENT = "NPS_Portfolio_Tracker/1.0 (contact@nps-tracker-demo.com)";
 
 // Cache paths
 const DATA_DIR = path.join(process.cwd(), "src/shared/data");
@@ -32,9 +31,7 @@ async function loadTickerCache() {
   try {
     const data = await fs.readFile(TICKER_CACHE_PATH, "utf-8");
     tickerCache = JSON.parse(data);
-    console.log(
-      `Loaded ${Object.keys(tickerCache).length} entries from ticker cache.`,
-    );
+    console.log(`Loaded ${Object.keys(tickerCache).length} entries from ticker cache.`);
   } catch (e) {
     console.log("No existing ticker cache found, starting fresh.");
     tickerCache = {};
@@ -76,10 +73,7 @@ async function resolveTicker(
     // Clean up name for better search results
     const cleanName = nameOfIssuer
       .replace(/\s+/g, " ")
-      .replace(
-        / CORPORATION| CORP\.?| INC\.?| COMPANY| CO\.?| PLC| LTD\.?| AG| SA/gi,
-        "",
-      )
+      .replace(/ CORPORATION| CORP\.?| INC\.?| COMPANY| CO\.?| PLC| LTD\.?| AG| SA/gi, "")
       .trim();
 
     // Heuristic: If name is too short, might be ambiguous, but let's try
@@ -126,9 +120,7 @@ async function queryYahooFinance(query: string): Promise<any | null> {
     // Filter for Equity or ETF
     const equity = quotes.find(
       (q: any) =>
-        (q.quoteType === "EQUITY" ||
-          q.quoteType === "ETF" ||
-          q.quoteType === "MUTUALFUND") &&
+        (q.quoteType === "EQUITY" || q.quoteType === "ETF" || q.quoteType === "MUTUALFUND") &&
         q.isYahooFinance,
     );
 
@@ -192,18 +184,14 @@ async function fetchSECSubmissions(): Promise<SECSubmission> {
   });
 
   if (!response.ok) {
-    throw new Error(
-      `Failed to fetch SEC submissions: ${response.status} ${response.statusText}`,
-    );
+    throw new Error(`Failed to fetch SEC submissions: ${response.status} ${response.statusText}`);
   }
 
   return response.json();
 }
 
 // Helper to batch process ticker resolution
-async function resolveHoldingsTickers(
-  holdings: Filing13F[],
-): Promise<Filing13F[]> {
+async function resolveHoldingsTickers(holdings: Filing13F[]): Promise<Filing13F[]> {
   console.log(`Resolving tickers for ${holdings.length} holdings...`);
 
   const resolvedHoldings: Filing13F[] = [];
@@ -315,9 +303,7 @@ async function parse13FXML(accessionNumber: string): Promise<Filing13F[]> {
   });
 
   if (!indexResponse.ok) {
-    throw new Error(
-      `Failed to fetch filing index: ${indexResponse.statusText}`,
-    );
+    throw new Error(`Failed to fetch filing index: ${indexResponse.statusText}`);
   }
 
   const indexData = await indexResponse.json();
@@ -450,10 +436,7 @@ async function scrape() {
           holdings,
         });
       } catch (err) {
-        console.error(
-          `Failed to process ${filing.year} Q${filing.quarter}:`,
-          err,
-        );
+        console.error(`Failed to process ${filing.year} Q${filing.quarter}:`, err);
       }
     }
 
