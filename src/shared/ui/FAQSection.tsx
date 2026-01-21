@@ -41,7 +41,7 @@ export function FAQSection({ items, title = "자주 묻는 질문" }: FAQSection
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <h2 className="text-xl font-bold mb-5 text-foreground">{title}</h2>
-      <div className="space-y-3">
+      <div className="space-y-3 mt-4">
         {items.map((item, index) => {
           const isOpen = openIndex === index;
           return (
