@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { PortfolioQuarter } from "@/entities/portfolio/types";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
+import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { ShareButton } from "@/shared/ui/ShareButton";
 import { AdBanner } from "@/shared/ui/AdBanner";
@@ -329,13 +330,7 @@ export default async function SectorPage({ params }: SectorPageProps) {
           </FadeIn>
         </main>
 
-        <footer className="border-t border-border py-8 mt-12">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-sm text-muted">
-              © 2025 NPS 13F 트래커. SEC 공개 데이터 기반 분석 서비스입니다.
-            </p>
-          </div>
-        </footer>
+        <GlobalFooter />
       </div>
     </>
   );
