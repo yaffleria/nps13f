@@ -26,7 +26,7 @@ export function ShareButton({ title, text, label = "공유하기" }: ShareButton
   const handleKakaoShare = () => {
     if (window.Kakao && window.Kakao.isInitialized()) {
       // 현재 페이지의 OG 이미지 URL 추정 (로컬, 배포 환경 모두 대응)
-      const imageUrl = `${window.location.origin}${window.location.pathname}/opengraph-image`;
+      const imageUrl = `${window.location.origin}/share-banner.jpg`;
 
       window.Kakao.Share.sendDefault({
         objectType: "feed",

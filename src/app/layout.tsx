@@ -100,7 +100,7 @@ export const metadata: Metadata = {
     url: BASE_URL,
     images: [
       {
-        url: "/nps13f-logo.jpg",
+        url: "/share-banner.jpg",
         width: 1200,
         height: 630,
         alt: "NPS 13F - 국민연금 미국주식 포트폴리오 트래커",
@@ -115,7 +115,7 @@ export const metadata: Metadata = {
     title: "NPS 13F - 국민연금 미국주식 포트폴리오",
     description:
       "국민연금의 미국 주식 보유 현황(SEC 13F)을 확인하세요. 분기별 매수/매도 내역과 포트폴리오 분석.",
-    images: ["/nps13f-logo.jpg"],
+    images: ["/share-banner.jpg"],
     creator: "@charlotteprism",
     site: "@charlotteprism",
   },
