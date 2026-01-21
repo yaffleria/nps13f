@@ -28,7 +28,10 @@ export function ActivityTable({ activity }: ActivityTableProps) {
             const Label = isBuy ? "BUY" : "SELL";
 
             return (
-              <tr key={item.symbol} className="group hover:bg-background/50 transition-colors">
+              <tr
+                key={`${item.stock.cusip}-${item.history}`}
+                className="group hover:bg-background/50 transition-colors"
+              >
                 <td className="px-6 py-4">
                   <span
                     className={`inline-flex items-center gap-1 rounded px-2 py-1 text-xs font-bold ${colorClass} ${bgColorClass}`}

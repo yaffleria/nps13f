@@ -72,13 +72,15 @@ export function SortableHoldingsTable({
   const [sort, setSort] = useState<SortState>({ field: "percent", direction: "desc" });
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedStock, setSelectedStock] = useState<{ symbol: string; name: string } | null>(null);
+  const [selectedStock, setSelectedStock] = useState<{ symbol: string; name: string } | null>(null);
+
   const prevHoldingsMap = useMemo(() => {
     if (!previousQuarterHoldings) return new Map<string, StockPosition>();
     return new Map(previousQuarterHoldings.map((h) => [h.cusip, h]));
-  }, [previousQuarterHoldings]);
+  }, [previousQuarterHoldings]);
+
   const enrichedHoldings = useMemo(() => {
-    return holdings.map((stock) => {
+    return holdings.map((stock) => {
       const actualValue = stock.value / 1000;
       const reportedPrice = actualValue / stock.shares;
       const percent = (stock.value / totalValue) * 100;
@@ -99,7 +101,8 @@ export function SortableHoldingsTable({
         isNew: !prevStock,
       };
     });
-  }, [holdings, totalValue, prevHoldingsMap]);
+  }, [holdings, totalValue, prevHoldingsMap]);
+
   const sortedHoldings = useMemo(() => {
     return [...enrichedHoldings].sort((a, b) => {
       let compareResult = 0;
@@ -130,7 +133,8 @@ export function SortableHoldingsTable({
       }
       return sort.direction === "asc" ? compareResult : -compareResult;
     });
-  }, [enrichedHoldings, sort]);
+  }, [enrichedHoldings, sort]);
+
   const totalPages = Math.ceil(sortedHoldings.length / itemsPerPage);
   const paginatedHoldings = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
@@ -174,10 +178,8 @@ export function SortableHoldingsTable({
                   비중 변동
                 </SortableHeader>
               )}
-              <th className="px-4 py-3 font-medium text-left w-12">
-                <div className="flex items-center gap-1">
-                  <History className="w-4 h-4" />
-                </div>
+              <th className="px-4 py-3 font-medium">
+                <div className="flex items-center justify-center gap-1">보유 이력</div>
               </th>
             </tr>
           </thead>
@@ -192,7 +194,6 @@ export function SortableHoldingsTable({
 
               return (
                 <tr key={stock.cusip} className="group hover:bg-background/50 transition-colors">
-                  
                   <td className="px-4 py-3 font-semibold text-primary">
                     {stock.symbol}
                     {stock.isNew && (
@@ -238,8 +239,8 @@ export function SortableHoldingsTable({
                       {stock.portfolioChange.toFixed(2)}%
                     </td>
                   )}
-                  
-                  <td className="px-4 py-3">
+
+                  <td className="px-4 py-3 text-center">
                     <button
                       className={`p-1.5 rounded-lg transition-colors ${
                         quarters && quarters.length > 1
@@ -276,7 +277,6 @@ export function SortableHoldingsTable({
         </div>
 
         <div className="flex items-center gap-4">
-          
           <div className="flex items-center gap-2">
             <span>페이지당</span>
             <select
@@ -315,7 +315,7 @@ export function SortableHoldingsTable({
           </div>
         </div>
       </div>
-      
+
       {selectedStock && quarters && (
         <Modal
           isOpen={!!selectedStock}

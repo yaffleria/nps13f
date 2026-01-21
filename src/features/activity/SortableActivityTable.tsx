@@ -84,12 +84,14 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
   const [sort, setSort] = useState<SortState>({ field: "value", direction: "desc" });
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState<"all" | "buy" | "sell">("all");
+  const [filter, setFilter] = useState<"all" | "buy" | "sell">("all");
+
   const filteredActivity = useMemo(() => {
     if (filter === "all") return activity;
     if (filter === "buy") return activity.filter((a) => a.sharesChanged > 0);
     return activity.filter((a) => a.sharesChanged < 0);
-  }, [activity, filter]);
+  }, [activity, filter]);
+
   const sortedActivity = useMemo(() => {
     return [...filteredActivity].sort((a, b) => {
       let compareResult = 0;
@@ -117,7 +119,8 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
       }
       return sort.direction === "asc" ? compareResult : -compareResult;
     });
-  }, [filteredActivity, sort]);
+  }, [filteredActivity, sort]);
+
   const totalPages = Math.ceil(sortedActivity.length / itemsPerPage);
   const paginatedActivity = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
@@ -134,7 +137,6 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
 
   return (
     <div className="space-y-4">
-      
       <div className="flex items-center gap-2">
         {(["all", "buy", "sell"] as const).map((f) => (
           <button
@@ -197,10 +199,9 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
 
               return (
                 <tr
-                  key={`${item.symbol}-${item.history}`}
+                  key={`${item.stock.cusip}-${item.history}`}
                   className="group hover:bg-background/50 transition-colors"
                 >
-                  
                   <td className="px-4 py-3">
                     <span
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold ${typeInfo.color}`}
