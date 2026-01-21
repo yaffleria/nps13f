@@ -19,11 +19,11 @@ export interface PortfolioQuarter {
 export interface ActivityItem {
   symbol: string;
   name: string;
-  sharesChanged: number; 
-  percentChange: number; 
+  sharesChanged: number;
+  percentChange: number;
   reportedPrice: number;
-  value: number; 
-  portfolioImpact: number; 
+  value: number;
+  portfolioImpact: number;
   history: "buy" | "sell" | "hold" | "new" | "exit";
   stock: StockPosition;
 }

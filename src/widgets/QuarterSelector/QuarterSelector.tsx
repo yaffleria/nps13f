@@ -16,7 +16,8 @@ export function QuarterSelector({ quarters, selectedIndex, onSelect }: QuarterSe
 
   const current = quarters[selectedIndex];
   const canGoNewer = selectedIndex > 0;
-  const canGoOlder = selectedIndex < quarters.length - 1;
+  const canGoOlder = selectedIndex < quarters.length - 1;
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -29,7 +30,6 @@ export function QuarterSelector({ quarters, selectedIndex, onSelect }: QuarterSe
 
   return (
     <div className="flex items-center gap-2" ref={dropdownRef}>
-      
       <button
         onClick={() => canGoOlder && onSelect(selectedIndex + 1)}
         disabled={!canGoOlder}

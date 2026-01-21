@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import Link from "next/link";
 import { Metadata } from "next";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { PortfolioTabs } from "@/widgets/PortfolioTabs/PortfolioTabs";
@@ -7,6 +8,7 @@ import { PortfolioQuarter } from "@/entities/portfolio/types";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { formatCompactNumber } from "@/shared/lib/format";
 import { getAllJsonLd } from "@/shared/lib/jsonLd";
+import { ShareButton } from "@/shared/ui/ShareButton";
 
 export const metadata: Metadata = {
   title: "국민연금 13F - 미국주식 보유현황 & 매매내역 분석",
@@ -96,30 +98,40 @@ export default async function PortfolioPage({
         <main className="container mx-auto px-4 py-8" role="main">
           <FadeIn>
             {/* Hero Section - SEO 최적화 */}
-            <header className="mb-8">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 bg-linear-to-r from-primary via-accent to-primary bg-clip-text text-transparent inline-block">
-                국민연금 미국주식 포트폴리오
-              </h1>
-              <p className="text-secondary max-w-3xl text-lg leading-relaxed">
-                국민연금(NPS)의 SEC 13F 공시 기준 미국 주식 보유 현황입니다. 총 운용 자산:{" "}
-                <span className="text-foreground font-bold text-xl">
-                  ${formatCompactNumber(currentQuarter.totalValue)}
-                </span>
-                . 분기별 보유 종목과 매매 내역을 확인하세요.
-              </p>
-
-              {/* SEO용 숨겨진 키워드 텍스트 (스크린 리더 접근 가능) */}
-              <div className="sr-only">
-                <h2>
-                  {currentQuarter.year}년 Q{currentQuarter.quarter} 기준 국민연금 미국주식 보유 현황
-                </h2>
-                <p>
-                  국민연금이 보유한 주요 미국 주식: {topHoldings}. 총{" "}
-                  {currentQuarter.holdings.length}개 종목 보유.
-                </p>
-                <p>국민연금 13F 공시자료, 연기금 투자 현황, 기관투자자 포트폴리오 분석</p>
+            <header className="mb-0">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
+                <div className="flex-1">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 bg-linear-to-r from-primary via-accent to-primary bg-clip-text text-transparent inline-block">
+                    국민연금 미국주식 포트폴리오
+                  </h1>
+                  <p className="text-secondary max-w-3xl text-lg leading-relaxed">
+                    국민연금(NPS)의 SEC 13F 공시 기준 미국 주식 보유 현황입니다. 총 운용 자산:{" "}
+                    <span className="text-foreground font-bold text-xl">
+                      ${formatCompactNumber(currentQuarter.totalValue)}
+                    </span>
+                    . 분기별 보유 종목과 매매 내역을 확인하세요.
+                  </p>
+                </div>
+                <div className="flex-shrink-0">
+                  <ShareButton
+                    title="국민연금 미국주식 포트폴리오 (NPS 13F)"
+                    text="국민연금이 투자한 미국 주식 보유 현황과 매매 내역을 한눈에 확인하세요."
+                    label="공유하기"
+                  />
+                </div>
               </div>
             </header>
+            {/* SEO용 숨겨진 키워드 텍스트 (스크린 리더 접근 가능) */}
+            <div className="sr-only">
+              <h2>
+                {currentQuarter.year}년 Q{currentQuarter.quarter} 기준 국민연금 미국주식 보유 현황
+              </h2>
+              <p>
+                국민연금이 보유한 주요 미국 주식: {topHoldings}. 총 {currentQuarter.holdings.length}
+                개 종목 보유.
+              </p>
+              <p>국민연금 13F 공시자료, 연기금 투자 현황, 기관투자자 포트폴리오 분석</p>
+            </div>
 
             {/* Main Content */}
             <article>
@@ -132,7 +144,7 @@ export default async function PortfolioPage({
         <footer className="border-t border-border py-8 mt-12" role="contentinfo">
           <div className="container mx-auto px-4 text-center">
             <p className="text-sm text-muted">
-              © 2025 NPS 13F 트래커. 국민연금과 무관한 비공식 서비스입니다.
+              © 2025 NPS 13F 트래커. SEC 공개 데이터 기반 분석 서비스입니다.
             </p>
             <p className="mt-2 text-xs text-muted">
               데이터 출처:{" "}
@@ -158,17 +170,32 @@ export default async function PortfolioPage({
               </a>
             </p>
 
-            {/* SEO용 추가 링크 (검색엔진 크롤링용) */}
-            <nav className="mt-6 text-xs text-muted" aria-label="추가 정보 링크">
+            {/* 네비게이션 링크 */}
+            <nav className="mt-6 text-xs text-muted" aria-label="사이트 네비게이션">
               <span className="mr-4">
-                <a href="/?tab=holdings" className="hover:text-primary transition-colors">
+                <Link href="/?tab=holdings" className="hover:text-primary transition-colors">
                   보유종목
-                </a>
+                </Link>
               </span>
               <span className="mr-4">
-                <a href="/?tab=activity" className="hover:text-primary transition-colors">
+                <Link href="/?tab=activity" className="hover:text-primary transition-colors">
                   매매내역
-                </a>
+                </Link>
+              </span>
+              <span className="mr-4">
+                <Link href="/sectors" className="hover:text-primary transition-colors">
+                  섹터별 분석
+                </Link>
+              </span>
+              <span className="mr-4">
+                <Link href="/reports" className="hover:text-primary transition-colors">
+                  분기별 리포트
+                </Link>
+              </span>
+              <span>
+                <Link href="/compare" className="hover:text-primary transition-colors">
+                  종목 비교
+                </Link>
               </span>
             </nav>
           </div>

@@ -46,14 +46,12 @@ export function Modal({ isOpen, onClose, title, children, size = "md" }: ModalPr
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 
       <div
         ref={modalRef}
         className={`relative w-full ${sizeClasses[size]} bg-surface rounded-2xl border border-border shadow-2xl animate-in fade-in zoom-in-95 duration-200`}
       >
-        
         <div className="flex items-center justify-between px-6 py-4 border-b border-border">
           <h2 className="text-lg font-semibold text-foreground">{title}</h2>
           <button

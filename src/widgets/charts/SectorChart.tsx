@@ -19,7 +19,6 @@ const COLORS = [
 ];
 
 export function SectorChart({ holdings }: SectorChartProps) {
-
   const dataMap = new Map<string, number>();
   holdings.forEach((h) => {
     const sector = h.sector || "Other";
@@ -29,7 +28,7 @@ export function SectorChart({ holdings }: SectorChartProps) {
   const data = Array.from(dataMap.entries())
     .map(([name, value]) => ({ name, value }))
     .sort((a, b) => b.value - a.value)
-    .slice(0, 8); 
+    .slice(0, 8);
 
   return (
     <div className="h-[300px] w-full">

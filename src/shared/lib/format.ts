@@ -15,8 +15,7 @@ export const formatPercent = (value: number) => {
     style: "percent",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(value / 100); 
-
+  }).format(value / 100);
 };
 
 export const formatCompactNumber = (number: number) => {

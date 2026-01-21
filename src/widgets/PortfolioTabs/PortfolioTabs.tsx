@@ -45,21 +45,19 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
             <div className="h-12 w-px bg-border hidden sm:block" />
             <div>
               <p className="text-xs sm:text-sm text-secondary mb-1">분기</p>
-              <p className="text-base sm:text-lg font-semibold text-foreground">
+              <p className="text-lg sm:text-xl font-semibold text-foreground">
                 {currentQuarter.year}년 {currentQuarter.quarter}분기
               </p>
             </div>
             <div className="h-12 w-px bg-border hidden sm:block" />
             <div>
               <p className="text-xs sm:text-sm text-secondary mb-1">보유 종목 수</p>
-              <p className="text-base sm:text-lg font-semibold text-foreground">
-                {holdingsCount}개
-              </p>
+              <p className="text-lg sm:text-xl font-semibold text-foreground">{holdingsCount}개</p>
             </div>
             <div className="h-12 w-px bg-border hidden sm:block" />
             <div>
               <p className="text-xs sm:text-sm text-secondary mb-1">공시일</p>
-              <p className="text-base sm:text-lg font-semibold text-foreground">
+              <p className="text-lg sm:text-xl font-semibold text-foreground">
                 {new Date(currentQuarter.date).toLocaleDateString("ko-KR", {
                   year: "numeric",
                   month: "long",

@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "./providers";
+import { KakaoScript } from "@/shared/ui/KakaoScript";
 import "./globals.css";
 
 const GA_TRACKING_ID = "G-J6B01LT9W6";
@@ -55,10 +56,21 @@ export const metadata: Metadata = {
     "연기금 미국주식",
     "NPS 보유 종목",
     "NPS 포트폴리오",
+    // 확장 키워드
+    "연기금",
+    "펀드",
+    "기관투자",
+    "국민연금 섹터",
+    "국민연금 기술주",
+    "국민연금 헬스케어",
+    "국민연금 금융주",
+    "국민연금 분기 리포트",
+    "연기금 포트폴리오",
     // 영문 키워드
     "National Pension Service",
     "NPS Korea 13F",
     "Korean pension fund holdings",
+    "NPS stock holdings",
   ],
   authors: [{ name: "Charlotte", url: "https://x.com/charlotteprism" }],
   creator: "Charlotte",
@@ -175,9 +187,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary">
         <Providers>{children}</Providers>
+        <KakaoScript />
         <GoogleAnalytics gaId={GA_TRACKING_ID} />
-        <Analytics />
-        <SpeedInsights />
+        {process.env.NODE_ENV === "production" && process.env.VERCEL === "1" && (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        )}
       </body>
     </html>
   );

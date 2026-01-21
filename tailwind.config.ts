@@ -6,17 +6,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#191F28", // Deep dark background
-        surface: "#202632", // Card background
+        background: "#191F28",
+        surface: "#202632",
         foreground: "#FFFFFF",
-        primary: "#3182F6", // Toss Blue
-        secondary: "#B0B8C1", // Toss Gray
-        accent: "#F04452", // Toss Red
-        muted: "#4E5968", // Darker Gray
+        primary: "#3182F6",
+        secondary: "#B0B8C1",
+        accent: "#F04452",
+        muted: "#4E5968",
         border: "#333D4B",
-        success: "#4ADE80", // Green
-        positive: "#34C759", // Apple/US Finance Green
-        negative: "#FF3B30", // Apple/US Finance Red
+        success: "#4ADE80",
+        positive: "#34C759",
+        negative: "#FF3B30",
       },
       fontFamily: {
         sans: ["Pretendard Variable", "Inter", "sans-serif"],

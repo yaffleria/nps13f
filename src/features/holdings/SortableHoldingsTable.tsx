@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { StockPosition, PortfolioQuarter } from "@/entities/portfolio/types";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
 import { ChevronUp, ChevronDown, ChevronsUpDown, History } from "lucide-react";
@@ -195,7 +196,9 @@ export function SortableHoldingsTable({
               return (
                 <tr key={stock.cusip} className="group hover:bg-background/50 transition-colors">
                   <td className="px-4 py-3 font-semibold text-primary">
-                    {stock.symbol}
+                    <Link href={`/stocks/${stock.symbol}`} className="hover:underline">
+                      {stock.symbol}
+                    </Link>
                     {stock.isNew && (
                       <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold bg-success/20 text-success rounded">
                         신규

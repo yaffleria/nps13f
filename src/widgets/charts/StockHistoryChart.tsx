@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { PortfolioQuarter } from "@/entities/portfolio/types";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
+import { ClientOnly } from "@/shared/ui/ClientOnly";
 
 interface StockHistoryChartProps {
   symbol: string;
@@ -28,7 +29,7 @@ interface HistoryDataPoint {
   percent: number | null;
 }
 
-export function StockHistoryChart({ symbol, securityName, quarters }: StockHistoryChartProps) {
+export function StockHistoryChart({ symbol, securityName, quarters }: StockHistoryChartProps) {
   const data: HistoryDataPoint[] = [...quarters].reverse().map((q) => {
     const holding = q.holdings.find((h) => h.symbol === symbol || h.securityName === securityName);
 
@@ -53,7 +54,8 @@ export function StockHistoryChart({ symbol, securityName, quarters }: StockHisto
       price,
       percent,
     };
-  });
+  });
+
   const existingData = data.filter((d) => d.shares > 0);
   const currentData = existingData[existingData.length - 1];
   const firstData = existingData[0];
@@ -66,7 +68,6 @@ export function StockHistoryChart({ symbol, securityName, quarters }: StockHisto
 
   return (
     <div className="space-y-6">
-      
       <div className="flex items-center gap-4">
         <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
           <span className="text-lg font-bold text-primary">{symbol.slice(0, 2)}</span>
@@ -118,70 +119,72 @@ export function StockHistoryChart({ symbol, securityName, quarters }: StockHisto
       </div>
 
       <div className="h-[300px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#333D4B" vertical={false} />
-            <XAxis
-              dataKey="label"
-              tick={{ fill: "#8B95A1", fontSize: 12 }}
-              axisLine={{ stroke: "#333D4B" }}
-              tickLine={false}
-            />
-            <YAxis
-              yAxisId="left"
-              tick={{ fill: "#8B95A1", fontSize: 12 }}
-              axisLine={false}
-              tickLine={false}
-              tickFormatter={(value) => formatCompactNumber(value)}
-            />
-            <YAxis
-              yAxisId="right"
-              orientation="right"
-              tick={{ fill: "#8B95A1", fontSize: 12 }}
-              axisLine={false}
-              tickLine={false}
-              tickFormatter={(value) => `$${formatCompactNumber(value)}`}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#202632",
-                borderColor: "#333D4B",
-                borderRadius: "12px",
-              }}
-              itemStyle={{ color: "#fff" }}
-              labelStyle={{ color: "#8B95A1", marginBottom: 8 }}
-              formatter={(value, name) => {
-                const numValue = typeof value === "number" ? value : 0;
-                if (name === "shares") return [formatNumber(numValue) + "주", "보유량"];
-                if (name === "value") return ["$" + formatCompactNumber(numValue), "평가액"];
-                return [numValue, name];
-              }}
-            />
-            <Legend
-              wrapperStyle={{ paddingTop: 20 }}
-              formatter={(value) => {
-                if (value === "shares") return "보유량";
-                if (value === "value") return "평가액";
-                return value;
-              }}
-            />
-            <Bar
-              yAxisId="left"
-              dataKey="shares"
-              fill="#3182F6"
-              opacity={0.8}
-              radius={[4, 4, 0, 0]}
-            />
-            <Line
-              yAxisId="right"
-              type="monotone"
-              dataKey="value"
-              stroke="#34C759"
-              strokeWidth={2}
-              dot={{ fill: "#34C759", strokeWidth: 0, r: 4 }}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
+        <ClientOnly>
+          <ResponsiveContainer width="100%" height="100%">
+            <ComposedChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#333D4B" vertical={false} />
+              <XAxis
+                dataKey="label"
+                tick={{ fill: "#8B95A1", fontSize: 12 }}
+                axisLine={{ stroke: "#333D4B" }}
+                tickLine={false}
+              />
+              <YAxis
+                yAxisId="left"
+                tick={{ fill: "#8B95A1", fontSize: 12 }}
+                axisLine={false}
+                tickLine={false}
+                tickFormatter={(value) => formatCompactNumber(value)}
+              />
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                tick={{ fill: "#8B95A1", fontSize: 12 }}
+                axisLine={false}
+                tickLine={false}
+                tickFormatter={(value) => `$${formatCompactNumber(value)}`}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#202632",
+                  borderColor: "#333D4B",
+                  borderRadius: "12px",
+                }}
+                itemStyle={{ color: "#fff" }}
+                labelStyle={{ color: "#8B95A1", marginBottom: 8 }}
+                formatter={(value, name) => {
+                  const numValue = typeof value === "number" ? value : 0;
+                  if (name === "shares") return [formatNumber(numValue) + "주", "보유량"];
+                  if (name === "value") return ["$" + formatCompactNumber(numValue), "평가액"];
+                  return [numValue, name];
+                }}
+              />
+              <Legend
+                wrapperStyle={{ paddingTop: 20 }}
+                formatter={(value) => {
+                  if (value === "shares") return "보유량";
+                  if (value === "value") return "평가액";
+                  return value;
+                }}
+              />
+              <Bar
+                yAxisId="left"
+                dataKey="shares"
+                fill="#3182F6"
+                opacity={0.8}
+                radius={[4, 4, 0, 0]}
+              />
+              <Line
+                yAxisId="right"
+                type="monotone"
+                dataKey="value"
+                stroke="#34C759"
+                strokeWidth={2}
+                dot={{ fill: "#34C759", strokeWidth: 0, r: 4 }}
+              />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </ClientOnly>
       </div>
 
       <div className="overflow-x-auto rounded-xl border border-border">
