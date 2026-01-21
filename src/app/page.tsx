@@ -68,7 +68,7 @@ export default async function PortfolioPage({
 
       <main className="container mx-auto px-4 py-8">
         <FadeIn>
-          {/* Hero Section */}
+          
           <header className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent inline-block">
               국민연금 미국주식 포트폴리오
@@ -82,7 +82,6 @@ export default async function PortfolioPage({
             </p>
           </header>
 
-          {/* Main Content: Tabbed Holdings & Activity */}
           <PortfolioTabs quarters={data} initialTab={initialTab} />
         </FadeIn>
       </main>

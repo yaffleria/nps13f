@@ -22,12 +22,8 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
   const [showTrendModal, setShowTrendModal] = useState(false);
 
   const currentQuarter = quarters[selectedQuarterIndex];
-  const previousQuarter = quarters[selectedQuarterIndex + 1];
-
-  // Process activity for current selection
-  const activity = processActivity(currentQuarter, previousQuarter);
-
-  // Calculate summary stats
+  const previousQuarter = quarters[selectedQuarterIndex + 1];
+  const activity = processActivity(currentQuarter, previousQuarter);
   const totalValue = currentQuarter.totalValue;
   const holdingsCount = currentQuarter.holdings.length;
   const buys = activity.filter((a) => a.sharesChanged > 0);
@@ -35,9 +31,9 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
 
   return (
     <div className="space-y-6">
-      {/* Summary Cards + Quarter Selector */}
+      
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-        {/* Left: Summary Info */}
+        
         <div className="p-6 bg-surface rounded-2xl border border-border shadow-sm">
           <div className="flex flex-wrap items-center gap-8">
             <div>
@@ -70,7 +66,6 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
           </div>
         </div>
 
-        {/* Right: Quarter Selector */}
         <div className="flex items-center gap-4">
           <button
             onClick={() => setShowTrendModal(true)}
@@ -87,7 +82,6 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
         </div>
       </div>
 
-      {/* Tab Navigation - Important for SEO: Using proper semantic structure */}
       <div className="border-b border-border">
         <nav className="flex gap-1" role="tablist" aria-label="포트폴리오 보기">
           <button
@@ -143,9 +137,8 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
         </nav>
       </div>
 
-      {/* Tab Content */}
       <div>
-        {/* Holdings Tab Panel */}
+        
         <div
           role="tabpanel"
           id="holdings-panel"
@@ -162,7 +155,6 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
           )}
         </div>
 
-        {/* Activity Tab Panel */}
         <div
           role="tabpanel"
           id="activity-panel"
@@ -189,7 +181,6 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
         </div>
       </div>
 
-      {/* SEO: Hidden content for crawlers */}
       <div className="sr-only">
         <h2>
           국민연금 {currentQuarter.year}년 {currentQuarter.quarter}분기 보유 종목
@@ -205,7 +196,6 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
         </p>
       </div>
 
-      {/* Portfolio Trend Modal */}
       <Modal
         isOpen={showTrendModal}
         onClose={() => setShowTrendModal(false)}

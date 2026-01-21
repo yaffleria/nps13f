@@ -84,16 +84,12 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
   const [sort, setSort] = useState<SortState>({ field: "value", direction: "desc" });
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filter, setFilter] = useState<"all" | "buy" | "sell">("all");
-
-  // Filter activity
+  const [filter, setFilter] = useState<"all" | "buy" | "sell">("all");
   const filteredActivity = useMemo(() => {
     if (filter === "all") return activity;
     if (filter === "buy") return activity.filter((a) => a.sharesChanged > 0);
     return activity.filter((a) => a.sharesChanged < 0);
-  }, [activity, filter]);
-
-  // Sort activity
+  }, [activity, filter]);
   const sortedActivity = useMemo(() => {
     return [...filteredActivity].sort((a, b) => {
       let compareResult = 0;
@@ -121,9 +117,7 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
       }
       return sort.direction === "asc" ? compareResult : -compareResult;
     });
-  }, [filteredActivity, sort]);
-
-  // Pagination
+  }, [filteredActivity, sort]);
   const totalPages = Math.ceil(sortedActivity.length / itemsPerPage);
   const paginatedActivity = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
@@ -140,7 +134,7 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
 
   return (
     <div className="space-y-4">
-      {/* Filter Tabs */}
+      
       <div className="flex items-center gap-2">
         {(["all", "buy", "sell"] as const).map((f) => (
           <button
@@ -206,7 +200,7 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
                   key={`${item.symbol}-${item.history}`}
                   className="group hover:bg-background/50 transition-colors"
                 >
-                  {/* Type Badge */}
+                  
                   <td className="px-4 py-3">
                     <span
                       className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold ${typeInfo.color}`}
@@ -216,15 +210,12 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
                     </span>
                   </td>
 
-                  {/* Ticker */}
                   <td className="px-4 py-3 font-semibold text-primary">{item.symbol}</td>
 
-                  {/* Stock Name */}
                   <td className="px-4 py-3 font-medium text-foreground max-w-[200px] truncate">
                     {item.name}
                   </td>
 
-                  {/* % Change */}
                   <td className={`px-4 py-3 text-right font-medium ${changeColor}`}>
                     {item.percentChange > 0 ? "+" : ""}
                     {item.percentChange === 100
@@ -234,13 +225,11 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
                         : `${item.percentChange.toFixed(2)}%`}
                   </td>
 
-                  {/* Shares Changed */}
                   <td className={`px-4 py-3 text-right font-medium ${changeColor}`}>
                     {isBuy ? "+" : ""}
                     {formatNumber(item.sharesChanged)}
                   </td>
 
-                  {/* Value */}
                   <td className="px-4 py-3 text-right font-bold text-foreground">
                     ${formatCompactNumber(Math.abs(item.value))}
                   </td>
@@ -251,7 +240,6 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
         </table>
       </div>
 
-      {/* Pagination */}
       <div className="flex items-center justify-between text-sm text-secondary">
         <div>
           {sortedActivity.length > 0 && (

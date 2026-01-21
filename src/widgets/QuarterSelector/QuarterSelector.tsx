@@ -16,9 +16,7 @@ export function QuarterSelector({ quarters, selectedIndex, onSelect }: QuarterSe
 
   const current = quarters[selectedIndex];
   const canGoNewer = selectedIndex > 0;
-  const canGoOlder = selectedIndex < quarters.length - 1;
-
-  // Close dropdown when clicking outside
+  const canGoOlder = selectedIndex < quarters.length - 1;
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -31,7 +29,7 @@ export function QuarterSelector({ quarters, selectedIndex, onSelect }: QuarterSe
 
   return (
     <div className="flex items-center gap-2" ref={dropdownRef}>
-      {/* Previous (Older) Button */}
+      
       <button
         onClick={() => canGoOlder && onSelect(selectedIndex + 1)}
         disabled={!canGoOlder}
@@ -41,7 +39,6 @@ export function QuarterSelector({ quarters, selectedIndex, onSelect }: QuarterSe
         <ChevronLeft className="w-4 h-4" />
       </button>
 
-      {/* Quarter Dropdown */}
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -55,7 +52,6 @@ export function QuarterSelector({ quarters, selectedIndex, onSelect }: QuarterSe
           />
         </button>
 
-        {/* Dropdown Menu */}
         {isOpen && (
           <div className="absolute top-full mt-2 left-0 right-0 bg-surface border border-border rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
             <div className="max-h-[300px] overflow-y-auto no-scrollbar">
@@ -87,7 +83,6 @@ export function QuarterSelector({ quarters, selectedIndex, onSelect }: QuarterSe
         )}
       </div>
 
-      {/* Next (Newer) Button */}
       <button
         onClick={() => canGoNewer && onSelect(selectedIndex - 1)}
         disabled={!canGoNewer}

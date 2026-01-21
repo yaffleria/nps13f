@@ -72,18 +72,13 @@ export function SortableHoldingsTable({
   const [sort, setSort] = useState<SortState>({ field: "percent", direction: "desc" });
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedStock, setSelectedStock] = useState<{ symbol: string; name: string } | null>(null);
-
-  // Build a map of previous quarter shares for comparison
+  const [selectedStock, setSelectedStock] = useState<{ symbol: string; name: string } | null>(null);
   const prevHoldingsMap = useMemo(() => {
     if (!previousQuarterHoldings) return new Map<string, StockPosition>();
     return new Map(previousQuarterHoldings.map((h) => [h.cusip, h]));
-  }, [previousQuarterHoldings]);
-
-  // Enrich holdings with calculated values
+  }, [previousQuarterHoldings]);
   const enrichedHoldings = useMemo(() => {
-    return holdings.map((stock) => {
-      // SEC 13F reports value in thousands of dollars, so we divide by 1000 for actual USD
+    return holdings.map((stock) => {
       const actualValue = stock.value / 1000;
       const reportedPrice = actualValue / stock.shares;
       const percent = (stock.value / totalValue) * 100;
@@ -104,9 +99,7 @@ export function SortableHoldingsTable({
         isNew: !prevStock,
       };
     });
-  }, [holdings, totalValue, prevHoldingsMap]);
-
-  // Sort holdings
+  }, [holdings, totalValue, prevHoldingsMap]);
   const sortedHoldings = useMemo(() => {
     return [...enrichedHoldings].sort((a, b) => {
       let compareResult = 0;
@@ -137,9 +130,7 @@ export function SortableHoldingsTable({
       }
       return sort.direction === "asc" ? compareResult : -compareResult;
     });
-  }, [enrichedHoldings, sort]);
-
-  // Pagination
+  }, [enrichedHoldings, sort]);
   const totalPages = Math.ceil(sortedHoldings.length / itemsPerPage);
   const paginatedHoldings = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
@@ -160,11 +151,6 @@ export function SortableHoldingsTable({
         <table className="w-full text-sm">
           <thead className="bg-background/80 text-secondary border-b border-border">
             <tr>
-              <th className="px-4 py-3 font-medium text-left w-12">
-                <div className="flex items-center gap-1">
-                  <History className="w-4 h-4" />
-                </div>
-              </th>
               <SortableHeader field="symbol" currentSort={sort} onSort={handleSort}>
                 티커
               </SortableHeader>
@@ -188,6 +174,11 @@ export function SortableHoldingsTable({
                   비중 변동
                 </SortableHeader>
               )}
+              <th className="px-4 py-3 font-medium text-left w-12">
+                <div className="flex items-center gap-1">
+                  <History className="w-4 h-4" />
+                </div>
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -201,7 +192,53 @@ export function SortableHoldingsTable({
 
               return (
                 <tr key={stock.cusip} className="group hover:bg-background/50 transition-colors">
-                  {/* History Icon */}
+                  
+                  <td className="px-4 py-3 font-semibold text-primary">
+                    {stock.symbol}
+                    {stock.isNew && (
+                      <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold bg-success/20 text-success rounded">
+                        신규
+                      </span>
+                    )}
+                  </td>
+
+                  <td className="px-4 py-3 font-medium text-foreground max-w-[200px] truncate">
+                    {stock.securityName}
+                  </td>
+
+                  <td className="px-4 py-3 text-right">
+                    <div className="flex flex-col items-end gap-1">
+                      <span className="font-semibold text-foreground">
+                        {stock.percent.toFixed(2)}%
+                      </span>
+                      <div className="h-1.5 w-20 rounded-full bg-border overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300"
+                          style={{ width: `${Math.min(stock.percent * 5, 100)}%` }}
+                        />
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="px-4 py-3 text-right font-medium text-foreground">
+                    {formatNumber(stock.shares)}
+                  </td>
+
+                  <td className="px-4 py-3 text-right text-foreground">
+                    ${formatNumber(stock.reportedPrice)}
+                  </td>
+
+                  <td className="px-4 py-3 text-right font-bold text-foreground">
+                    ${formatCompactNumber(stock.value)}
+                  </td>
+
+                  {previousQuarterHoldings && (
+                    <td className={`px-4 py-3 text-right font-medium ${changeColor}`}>
+                      {stock.portfolioChange > 0 ? "+" : ""}
+                      {stock.portfolioChange.toFixed(2)}%
+                    </td>
+                  )}
+                  
                   <td className="px-4 py-3">
                     <button
                       className={`p-1.5 rounded-lg transition-colors ${
@@ -220,59 +257,6 @@ export function SortableHoldingsTable({
                       <History className="w-4 h-4" />
                     </button>
                   </td>
-
-                  {/* Ticker */}
-                  <td className="px-4 py-3 font-semibold text-primary">
-                    {stock.symbol}
-                    {stock.isNew && (
-                      <span className="ml-2 px-1.5 py-0.5 text-[10px] font-bold bg-success/20 text-success rounded">
-                        신규
-                      </span>
-                    )}
-                  </td>
-
-                  {/* Stock Name */}
-                  <td className="px-4 py-3 font-medium text-foreground max-w-[200px] truncate">
-                    {stock.securityName}
-                  </td>
-
-                  {/* % Portfolio with progress bar */}
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex flex-col items-end gap-1">
-                      <span className="font-semibold text-foreground">
-                        {stock.percent.toFixed(2)}%
-                      </span>
-                      <div className="h-1.5 w-20 rounded-full bg-border overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300"
-                          style={{ width: `${Math.min(stock.percent * 5, 100)}%` }}
-                        />
-                      </div>
-                    </div>
-                  </td>
-
-                  {/* Shares */}
-                  <td className="px-4 py-3 text-right font-medium text-foreground">
-                    {formatNumber(stock.shares)}
-                  </td>
-
-                  {/* Reported Price */}
-                  <td className="px-4 py-3 text-right text-foreground">
-                    ${formatNumber(stock.reportedPrice)}
-                  </td>
-
-                  {/* Value */}
-                  <td className="px-4 py-3 text-right font-bold text-foreground">
-                    ${formatCompactNumber(stock.value)}
-                  </td>
-
-                  {/* Change to Portfolio */}
-                  {previousQuarterHoldings && (
-                    <td className={`px-4 py-3 text-right font-medium ${changeColor}`}>
-                      {stock.portfolioChange > 0 ? "+" : ""}
-                      {stock.portfolioChange.toFixed(2)}%
-                    </td>
-                  )}
                 </tr>
               );
             })}
@@ -280,7 +264,6 @@ export function SortableHoldingsTable({
         </table>
       </div>
 
-      {/* Pagination */}
       <div className="flex items-center justify-between text-sm text-secondary">
         <div>
           {sortedHoldings.length > 0 && (
@@ -293,7 +276,7 @@ export function SortableHoldingsTable({
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Per Page Selector */}
+          
           <div className="flex items-center gap-2">
             <span>페이지당</span>
             <select
@@ -311,7 +294,6 @@ export function SortableHoldingsTable({
             </select>
           </div>
 
-          {/* Page Navigation */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
@@ -333,7 +315,7 @@ export function SortableHoldingsTable({
           </div>
         </div>
       </div>
-      {/* Stock History Modal */}
+      
       {selectedStock && quarters && (
         <Modal
           isOpen={!!selectedStock}

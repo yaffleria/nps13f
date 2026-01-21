@@ -9,7 +9,7 @@ export function GlobalHeader() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
           <div className="relative h-8 w-8 overflow-hidden rounded-full">
-            <Image src="/nps-logo-only.png" alt="NPS 13F Logo" fill className="object-cover" />
+            <Image src="/nps13f-logo.jpg" alt="NPS 13F Logo" fill className="object-cover" />
           </div>
           <span className="text-xl font-bold tracking-tight text-white hover:opacity-80 transition-opacity">
             국민연금 13F

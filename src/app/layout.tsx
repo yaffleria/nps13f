@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "매수 매도",
   ],
   icons: {
-    icon: "/icon.png",
+    icon: "/nps13f-logo.jpg",
   },
   openGraph: {
     title: "NPS 13F - 국민연금 미국주식 포트폴리오 트래커",
@@ -33,11 +33,20 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     siteName: "NPS 13F",
+    images: [
+      {
+        url: "/nps13f-logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "NPS 13F Portfolio Tracker",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "NPS 13F - 국민연금 미국주식 포트폴리오",
     description: "국민연금의 미국 주식 보유 현황(13F)을 확인하세요.",
+    images: ["/nps13f-logo.jpg"],
     creator: "@charlotteprism",
   },
   robots: {

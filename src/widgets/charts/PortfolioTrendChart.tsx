@@ -16,8 +16,7 @@ interface PortfolioTrendChartProps {
   quarters: PortfolioQuarter[];
 }
 
-export function PortfolioTrendChart({ quarters }: PortfolioTrendChartProps) {
-  // Reverse to show chronologically (oldest first)
+export function PortfolioTrendChart({ quarters }: PortfolioTrendChartProps) {
   const data = [...quarters].reverse().map((q) => ({
     label: `${q.year} Q${q.quarter}`,
     value: q.totalValue / 1000,
@@ -26,7 +25,7 @@ export function PortfolioTrendChart({ quarters }: PortfolioTrendChartProps) {
 
   return (
     <div className="space-y-6">
-      {/* Chart */}
+      
       <div className="h-[350px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -74,7 +73,6 @@ export function PortfolioTrendChart({ quarters }: PortfolioTrendChartProps) {
         </ResponsiveContainer>
       </div>
 
-      {/* Summary Table */}
       <div className="overflow-x-auto rounded-xl border border-border">
         <table className="w-full text-sm">
           <thead className="bg-background/80 text-secondary border-b border-border">

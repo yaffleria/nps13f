@@ -28,8 +28,7 @@ interface HistoryDataPoint {
   percent: number | null;
 }
 
-export function StockHistoryChart({ symbol, securityName, quarters }: StockHistoryChartProps) {
-  // Build history data for this stock across all quarters
+export function StockHistoryChart({ symbol, securityName, quarters }: StockHistoryChartProps) {
   const data: HistoryDataPoint[] = [...quarters].reverse().map((q) => {
     const holding = q.holdings.find((h) => h.symbol === symbol || h.securityName === securityName);
 
@@ -54,9 +53,7 @@ export function StockHistoryChart({ symbol, securityName, quarters }: StockHisto
       price,
       percent,
     };
-  });
-
-  // Calculate statistics
+  });
   const existingData = data.filter((d) => d.shares > 0);
   const currentData = existingData[existingData.length - 1];
   const firstData = existingData[0];
@@ -69,7 +66,7 @@ export function StockHistoryChart({ symbol, securityName, quarters }: StockHisto
 
   return (
     <div className="space-y-6">
-      {/* Stock Info Header */}
+      
       <div className="flex items-center gap-4">
         <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
           <span className="text-lg font-bold text-primary">{symbol.slice(0, 2)}</span>
@@ -80,7 +77,6 @@ export function StockHistoryChart({ symbol, securityName, quarters }: StockHisto
         </div>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="p-4 bg-background rounded-xl border border-border">
           <p className="text-xs text-secondary mb-1">현재 보유량</p>
@@ -121,7 +117,6 @@ export function StockHistoryChart({ symbol, securityName, quarters }: StockHisto
         </div>
       </div>
 
-      {/* Chart */}
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -189,7 +184,6 @@ export function StockHistoryChart({ symbol, securityName, quarters }: StockHisto
         </ResponsiveContainer>
       </div>
 
-      {/* History Table */}
       <div className="overflow-x-auto rounded-xl border border-border">
         <table className="w-full text-sm">
           <thead className="bg-background/80 text-secondary border-b border-border">

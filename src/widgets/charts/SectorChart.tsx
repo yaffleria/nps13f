@@ -19,7 +19,7 @@ const COLORS = [
 ];
 
 export function SectorChart({ holdings }: SectorChartProps) {
-  // Aggregate by sector
+
   const dataMap = new Map<string, number>();
   holdings.forEach((h) => {
     const sector = h.sector || "Other";
@@ -29,7 +29,7 @@ export function SectorChart({ holdings }: SectorChartProps) {
   const data = Array.from(dataMap.entries())
     .map(([name, value]) => ({ name, value }))
     .sort((a, b) => b.value - a.value)
-    .slice(0, 8); // Top 8 sectors
+    .slice(0, 8); 
 
   return (
     <div className="h-[300px] w-full">

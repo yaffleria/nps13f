@@ -8,6 +8,6 @@ export const metadata: Metadata = {
 };
 
 export default function ActivityPage() {
-  // Redirect to the main page with activity tab
+
   redirect("/?tab=activity");
 }
