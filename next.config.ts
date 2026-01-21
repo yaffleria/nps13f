@@ -62,21 +62,10 @@ const nextConfig: NextConfig = {
   },
 
   // 리다이렉트 (오래된 URL이나 대체 URL 처리)
+  // 참고: www → non-www 리다이렉트는 Vercel 대시보드에서 관리
+  // (Next.js와 Vercel 양쪽에서 설정하면 무한 리디렉션 발생)
   async redirects() {
-    return [
-      // www 리다이렉트 (SEO 중복 콘텐츠 방지)
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "www.nps13f.com",
-          },
-        ],
-        destination: "https://nps13f.com/:path*",
-        permanent: true,
-      },
-    ];
+    return [];
   },
 };
 
