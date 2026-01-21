@@ -153,6 +153,7 @@ export const metadata: Metadata = {
 
   // 추가 메타 정보
   other: {
+    "naver-site-verification": "242ca1d7af49c6fbbf64d1c3db0f5d172a7e10a9",
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "black-translucent",
     "mobile-web-app-capable": "yes",
