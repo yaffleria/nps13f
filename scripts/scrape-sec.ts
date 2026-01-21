@@ -23,6 +23,32 @@ interface TickerCache {
   [cusip: string]: TickerCacheEntry;
 }
 
+interface Filing13F {
+  nameOfIssuer: string;
+  titleOfClass: string;
+  cusip: string;
+  value: number;
+  sshPrnamt: number;
+  sshPrnamtType: string;
+  investmentDiscretion: string;
+  otherManager: string;
+  votingAuthority: {
+    sole: number;
+    shared: number;
+    none: number;
+  };
+  symbol?: string;
+  sector?: string;
+}
+
+interface FilingPeriod {
+  date: string;
+  year: number;
+  quarter: number;
+  totalValue: number;
+  holdings: Filing13F[];
+}
+
 // Global cache object
 let tickerCache: TickerCache = {};
 
@@ -38,10 +64,84 @@ async function loadTickerCache() {
   }
 }
 
+// Helper functions for scraping
+async function fetchSECSubmissions() {
+  const url = `${SEC_SUBMISSIONS_URL}/submissions/CIK${NPS_CIK}.json`;
+  console.log(`Fetching submissions from ${url}...`);
+  const res = await fetch(url, {
+    headers: { "User-Agent": SEC_USER_AGENT },
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch submissions: ${res.statusText}`);
+  }
+  return res.json();
+}
+
+function parseHoldingsFromXML(xml: string): Filing13F[] {
+  const holdings: Filing13F[] = [];
+  const infoTableRegex = /<infoTable>([\s\S]*?)<\/infoTable>/g;
+  let match;
+
+  const extract = (tag: string, content: string) => {
+    const r = new RegExp(`<${tag}>(.*?)<\/${tag}>`, "i");
+    const m = content.match(r);
+    return m ? m[1].trim() : "";
+  };
+
+  while ((match = infoTableRegex.exec(xml)) !== null) {
+    const content = match[1];
+    holdings.push({
+      nameOfIssuer: extract("nameOfIssuer", content),
+      titleOfClass: extract("titleOfClass", content),
+      cusip: extract("cusip", content),
+      value: parseInt(extract("value", content), 10) || 0,
+      sshPrnamt: parseInt(extract("sshPrnamt", content), 10) || 0,
+      sshPrnamtType: extract("sshPrnamtType", content),
+      investmentDiscretion: extract("investmentDiscretion", content),
+      otherManager: extract("otherManager", content),
+      votingAuthority: {
+        sole: parseInt(extract("Sole", content), 10) || 0,
+        shared: parseInt(extract("Shared", content), 10) || 0,
+        none: parseInt(extract("None", content), 10) || 0,
+      },
+    });
+  }
+  return holdings;
+}
+
+async function resolveHoldingsTickers(holdings: Filing13F[]): Promise<Filing13F[]> {
+  const resolved: Filing13F[] = [];
+  for (const h of holdings) {
+    let cacheEntry = tickerCache[h.cusip];
+
+    if (!cacheEntry) {
+      // Try to find by name if CUSIP search is not ideal, relying on previously defined queryYahooFinance
+      const query = h.nameOfIssuer;
+      const quote = await queryYahooFinance(query);
+
+      if (quote) {
+        cacheEntry = {
+          symbol: quote.symbol,
+          securityName: quote.shortname || quote.longname || h.nameOfIssuer,
+          sector: quote.sector,
+        };
+        tickerCache[h.cusip] = cacheEntry;
+      }
+    }
+
+    if (cacheEntry) {
+      h.symbol = cacheEntry.symbol;
+      h.sector = cacheEntry.sector || "Unknown"; // populate sector
+    }
+    resolved.push(h);
+  }
+  return resolved;
+}
+
 // ...
 
 // Helper to save cache
-async function safeTickerCache() {
+async function saveTickerCache() {
   try {
     await fs.mkdir(DATA_DIR, { recursive: true });
     await fs.writeFile(TICKER_CACHE_PATH, JSON.stringify(tickerCache, null, 2));
@@ -50,6 +150,8 @@ async function safeTickerCache() {
     console.error("Failed to save ticker cache:", err);
   }
 }
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // ...
 
