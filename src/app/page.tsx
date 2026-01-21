@@ -6,7 +6,6 @@ import { PortfolioTabs } from "@/widgets/PortfolioTabs/PortfolioTabs";
 import { PortfolioQuarter } from "@/entities/portfolio/types";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { formatCompactNumber } from "@/shared/lib/format";
-import { AdSenseBanner } from "@/shared/ui/AdSenseBanner";
 
 export const metadata: Metadata = {
   title: "국민연금 13F",
@@ -82,12 +81,6 @@ export default async function PortfolioPage({
               . 분기별 보유 종목과 매매 내역을 확인하세요.
             </p>
           </header>
-
-          {/* AdSense Banner (PC/Mobile Common) */}
-          {/* AdSense Banner (PC/Mobile Common) */}
-          <div className="mb-8">
-            <AdSenseBanner dataAdSlot="1480014227" />
-          </div>
 
           {/* Main Content: Tabbed Holdings & Activity */}
           <PortfolioTabs quarters={data} initialTab={initialTab} />
