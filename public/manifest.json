@@ -1,0 +1,26 @@
+{
+  "name": "NPS 13F - 국민연금 미국주식 포트폴리오 트래커",
+  "short_name": "NPS 13F",
+  "description": "국민연금(NPS)의 SEC 13F 공시 기반 미국 주식 보유 현황. 분기별 매수/매도 내역과 포트폴리오 분석.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/nps13f-logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/nps13f-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ],
+  "categories": ["finance", "business", "investment"],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

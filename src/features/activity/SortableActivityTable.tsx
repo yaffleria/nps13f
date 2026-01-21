@@ -213,7 +213,7 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
 
                   <td className="px-4 py-3 font-semibold text-primary">{item.symbol}</td>
 
-                  <td className="px-4 py-3 font-medium text-foreground max-w-[200px] truncate">
+                  <td className="px-4 py-3 font-medium text-foreground max-w-50 truncate">
                     {item.name}
                   </td>
 
@@ -241,7 +241,7 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
         </table>
       </div>
 
-      <div className="flex items-center justify-between text-sm text-secondary">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0 text-sm text-secondary">
         <div>
           {sortedActivity.length > 0 && (
             <span>

@@ -22,8 +22,10 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
   const [showTrendModal, setShowTrendModal] = useState(false);
 
   const currentQuarter = quarters[selectedQuarterIndex];
-  const previousQuarter = quarters[selectedQuarterIndex + 1];
-  const activity = processActivity(currentQuarter, previousQuarter);
+  const previousQuarter = quarters[selectedQuarterIndex + 1];
+
+  const activity = processActivity(currentQuarter, previousQuarter);
+
   const totalValue = currentQuarter.totalValue;
   const holdingsCount = currentQuarter.holdings.length;
   const buys = activity.filter((a) => a.sharesChanged > 0);
@@ -31,31 +33,33 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
 
   return (
     <div className="space-y-6">
-      
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-        
-        <div className="p-6 bg-surface rounded-2xl border border-border shadow-sm">
-          <div className="flex flex-wrap items-center gap-8">
-            <div>
-              <p className="text-sm text-secondary mb-1">포트폴리오 가치</p>
-              <p className="text-2xl font-bold text-primary">${formatCompactNumber(totalValue)}</p>
+        <div className="p-4 sm:p-6 bg-surface rounded-2xl border border-border shadow-sm">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-y-6 gap-x-4 sm:gap-8">
+            <div className="col-span-2 sm:col-span-1">
+              <p className="text-xs sm:text-sm text-secondary mb-1">포트폴리오 가치</p>
+              <p className="text-xl sm:text-2xl font-bold text-primary">
+                ${formatCompactNumber(totalValue)}
+              </p>
             </div>
             <div className="h-12 w-px bg-border hidden sm:block" />
             <div>
-              <p className="text-sm text-secondary mb-1">분기</p>
-              <p className="text-lg font-semibold text-foreground">
+              <p className="text-xs sm:text-sm text-secondary mb-1">분기</p>
+              <p className="text-base sm:text-lg font-semibold text-foreground">
                 {currentQuarter.year}년 {currentQuarter.quarter}분기
               </p>
             </div>
             <div className="h-12 w-px bg-border hidden sm:block" />
             <div>
-              <p className="text-sm text-secondary mb-1">보유 종목 수</p>
-              <p className="text-lg font-semibold text-foreground">{holdingsCount}개</p>
+              <p className="text-xs sm:text-sm text-secondary mb-1">보유 종목 수</p>
+              <p className="text-base sm:text-lg font-semibold text-foreground">
+                {holdingsCount}개
+              </p>
             </div>
             <div className="h-12 w-px bg-border hidden sm:block" />
             <div>
-              <p className="text-sm text-secondary mb-1">공시일</p>
-              <p className="text-lg font-semibold text-foreground">
+              <p className="text-xs sm:text-sm text-secondary mb-1">공시일</p>
+              <p className="text-base sm:text-lg font-semibold text-foreground">
                 {new Date(currentQuarter.date).toLocaleDateString("ko-KR", {
                   year: "numeric",
                   month: "long",
@@ -66,31 +70,33 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
           <button
             onClick={() => setShowTrendModal(true)}
-            className="px-4 py-2.5 bg-surface border border-border rounded-xl hover:bg-background hover:border-primary/50 transition-all flex items-center gap-2 text-secondary hover:text-foreground"
+            className="px-4 py-2.5 bg-surface border border-border rounded-xl hover:bg-background hover:border-primary/50 transition-all flex items-center justify-center gap-2 text-secondary hover:text-foreground w-full sm:w-auto"
           >
             <BarChart3 className="w-4 h-4" />
-            <span className="font-medium">포트폴리오 추이</span>
+            <span className="font-medium whitespace-nowrap">포트폴리오 추이</span>
           </button>
-          <QuarterSelector
-            quarters={quarters}
-            selectedIndex={selectedQuarterIndex}
-            onSelect={setSelectedQuarterIndex}
-          />
+          <div className="w-full sm:w-auto">
+            <QuarterSelector
+              quarters={quarters}
+              selectedIndex={selectedQuarterIndex}
+              onSelect={setSelectedQuarterIndex}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="border-b border-border">
-        <nav className="flex gap-1" role="tablist" aria-label="포트폴리오 보기">
+      <div className="border-b border-border overflow-x-auto">
+        <nav className="flex gap-1 min-w-max" role="tablist" aria-label="포트폴리오 보기">
           <button
             role="tab"
             aria-selected={activeTab === "holdings"}
             aria-controls="holdings-panel"
             id="holdings-tab"
             onClick={() => setActiveTab("holdings")}
-            className={`px-6 py-3 font-medium text-sm transition-all relative ${
+            className={`px-4 sm:px-6 py-3 font-medium text-sm transition-all relative whitespace-nowrap ${
               activeTab === "holdings" ? "text-primary" : "text-secondary hover:text-foreground"
             }`}
           >
@@ -110,7 +116,7 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
             aria-controls="activity-panel"
             id="activity-tab"
             onClick={() => setActiveTab("activity")}
-            className={`px-6 py-3 font-medium text-sm transition-all relative ${
+            className={`px-4 sm:px-6 py-3 font-medium text-sm transition-all relative whitespace-nowrap ${
               activeTab === "activity" ? "text-primary" : "text-secondary hover:text-foreground"
             }`}
           >
@@ -138,7 +144,6 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
       </div>
 
       <div>
-        
         <div
           role="tabpanel"
           id="holdings-panel"

@@ -203,7 +203,7 @@ export function SortableHoldingsTable({
                     )}
                   </td>
 
-                  <td className="px-4 py-3 font-medium text-foreground max-w-[200px] truncate">
+                  <td className="px-4 py-3 font-medium text-foreground max-w-50 truncate">
                     {stock.securityName}
                   </td>
 
@@ -214,7 +214,7 @@ export function SortableHoldingsTable({
                       </span>
                       <div className="h-1.5 w-20 rounded-full bg-border overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300"
+                          className="h-full bg-linear-to-r from-primary to-accent rounded-full transition-all duration-300"
                           style={{ width: `${Math.min(stock.percent * 5, 100)}%` }}
                         />
                       </div>
@@ -265,7 +265,7 @@ export function SortableHoldingsTable({
         </table>
       </div>
 
-      <div className="flex items-center justify-between text-sm text-secondary">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0 text-sm text-secondary">
         <div>
           {sortedHoldings.length > 0 && (
             <span>
