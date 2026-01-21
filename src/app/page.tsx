@@ -7,8 +7,11 @@ import { PortfolioTabs } from "@/widgets/PortfolioTabs/PortfolioTabs";
 import { PortfolioQuarter } from "@/entities/portfolio/types";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { formatCompactNumber } from "@/shared/lib/format";
+import { generateQuarterlyInsights } from "@/shared/lib/insights";
 import { getAllJsonLd } from "@/shared/lib/jsonLd";
 import { ShareButton } from "@/shared/ui/ShareButton";
+import { AdBanner } from "@/shared/ui/AdBanner";
+import { TrendingUp, TrendingDown, Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "국민연금 13F - 미국주식 보유현황 & 매매내역 분석",
@@ -62,6 +65,9 @@ export default async function PortfolioPage({
   // JSON-LD 구조화 데이터
   const jsonLdArray = getAllJsonLd(data?.[0]);
 
+  // 인사이트 생성
+  const insights = generateQuarterlyInsights(data[0], data[1]);
+
   if (!data || data.length === 0) {
     return (
       <div className="min-h-screen bg-background text-foreground font-sans flex items-center justify-center">
@@ -112,7 +118,7 @@ export default async function PortfolioPage({
                     . 분기별 보유 종목과 매매 내역을 확인하세요.
                   </p>
                 </div>
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <ShareButton
                     title="국민연금 미국주식 포트폴리오 (NPS 13F)"
                     text="국민연금이 투자한 미국 주식 보유 현황과 매매 내역을 한눈에 확인하세요."
@@ -121,6 +127,35 @@ export default async function PortfolioPage({
                 </div>
               </div>
             </header>
+
+            {/* 인사이트 카드 */}
+            {insights.length > 0 && (
+              <div className="mb-6 p-5 bg-surface/50 rounded-2xl border border-border">
+                <h2 className="text-lg font-bold mb-3 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-accent" />
+                  {currentQuarter.year}년 {currentQuarter.quarter}분기 주요 변화
+                </h2>
+                <ul className="space-y-2">
+                  {insights.slice(0, 5).map((insight, i) => (
+                    <li key={i} className="flex items-start gap-2 text-secondary">
+                      {insight.type === "top_buy" || insight.type === "new_entry" ? (
+                        <TrendingUp className="w-4 h-4 text-success mt-0.5 shrink-0" />
+                      ) : insight.type === "top_sell" || insight.type === "exit" ? (
+                        <TrendingDown className="w-4 h-4 text-negative mt-0.5 shrink-0" />
+                      ) : (
+                        <span className="w-4 h-4 shrink-0" />
+                      )}
+                      <span>{insight.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* 광고 배너 */}
+            <div className="mb-6">
+              <AdBanner slot="MAIN_HEADER_AD" format="horizontal" />
+            </div>
             {/* SEO용 숨겨진 키워드 텍스트 (스크린 리더 접근 가능) */}
             <div className="sr-only">
               <h2>

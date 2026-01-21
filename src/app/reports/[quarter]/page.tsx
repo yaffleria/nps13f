@@ -6,9 +6,11 @@ import { notFound } from "next/navigation";
 import { PortfolioQuarter } from "@/entities/portfolio/types";
 import { processActivity } from "@/entities/portfolio/lib/process-activity";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
+import { generateQuarterlyInsights } from "@/shared/lib/insights";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { ShareButton } from "@/shared/ui/ShareButton";
+import { AdBanner } from "@/shared/ui/AdBanner";
 import {
   ArrowLeft,
   Calendar,
@@ -18,6 +20,7 @@ import {
   Minus,
   BarChart3,
   Briefcase,
+  Sparkles,
 } from "lucide-react";
 
 interface ReportPageProps {
@@ -111,6 +114,35 @@ export default async function ReportPage({ params }: ReportPageProps) {
     .sort((a, b) => b.value - a.value)
     .slice(0, 10);
 
+  // 인사이트 생성
+  const insights = generateQuarterlyInsights(currentQuarter, previousQuarter);
+
+  // BreadcrumbList JSON-LD
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "홈",
+        item: "https://www.nps13f.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "분기별 리포트",
+        item: "https://www.nps13f.com/reports",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `${parsed.year}년 ${parsed.quarter}분기`,
+        item: `https://www.nps13f.com/reports/${slug}`,
+      },
+    ],
+  };
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Report",
@@ -123,6 +155,10 @@ export default async function ReportPage({ params }: ReportPageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <div className="min-h-screen bg-background text-foreground font-sans">
         <GlobalHeader />
@@ -214,6 +250,39 @@ export default async function ReportPage({ params }: ReportPageProps) {
                 </div>
                 <p className="text-xl sm:text-2xl font-bold text-negative">{sells.length}건</p>
               </div>
+            </div>
+
+            {/* 인사이트 카드 */}
+            {insights.length > 0 && (
+              <div className="mb-8 p-5 bg-surface/50 rounded-2xl border border-border">
+                <h2 className="text-lg font-bold mb-3 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-accent" />
+                  이번 분기 주요 하이라이트
+                </h2>
+                <ul className="space-y-2">
+                  {insights.map((insight, i) => (
+                    <li key={i} className="flex items-start gap-2 text-secondary">
+                      {insight.type === "top_buy" ? (
+                        <TrendingUp className="w-4 h-4 text-success mt-0.5 shrink-0" />
+                      ) : insight.type === "top_sell" ? (
+                        <TrendingDown className="w-4 h-4 text-negative mt-0.5 shrink-0" />
+                      ) : insight.type === "new_entry" ? (
+                        <Plus className="w-4 h-4 text-success mt-0.5 shrink-0" />
+                      ) : insight.type === "exit" ? (
+                        <Minus className="w-4 h-4 text-negative mt-0.5 shrink-0" />
+                      ) : (
+                        <span className="w-4 h-4 shrink-0" />
+                      )}
+                      <span>{insight.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* 광고 배너 */}
+            <div className="mb-8">
+              <AdBanner slot="REPORT_HEADER_AD" format="horizontal" />
             </div>
 
             {/* 상위 10개 종목 */}

@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { FadeIn } from "@/shared/ui/FadeIn";
+import { AdBanner } from "@/shared/ui/AdBanner";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
 import { Search, X, Plus, BarChart3, TrendingUp, TrendingDown } from "lucide-react";
 import {
@@ -173,6 +174,11 @@ export default function ComparePage() {
               국민연금의 보유 종목을 비교 분석하세요. 최대 8개 종목까지 비교할 수 있습니다.
             </p>
           </header>
+
+          {/* 광고 배너 */}
+          <div className="mb-6">
+            <AdBanner slot="9828624569" format="horizontal" />
+          </div>
 
           {/* 종목 선택 */}
           <div className="mb-8">

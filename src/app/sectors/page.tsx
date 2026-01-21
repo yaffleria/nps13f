@@ -6,6 +6,7 @@ import { PortfolioQuarter } from "@/entities/portfolio/types";
 import { formatCompactNumber } from "@/shared/lib/format";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { FadeIn } from "@/shared/ui/FadeIn";
+import { AdBanner } from "@/shared/ui/AdBanner";
 import { ArrowRight, Building2 } from "lucide-react";
 
 async function getPortfolioData(): Promise<PortfolioQuarter[]> {
@@ -124,6 +125,11 @@ export default async function SectorsPage() {
                 주식 보유 현황
               </p>
             </header>
+
+            {/* 광고 배너 */}
+            <div className="mb-6">
+              <AdBanner slot="9828624569" format="horizontal" />
+            </div>
 
             {/* 섹터 카드 그리드 */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
