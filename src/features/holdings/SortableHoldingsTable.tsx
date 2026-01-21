@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { StockPosition } from "@/entities/portfolio/types";
+import { StockPosition, PortfolioQuarter } from "@/entities/portfolio/types";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
 import { ChevronUp, ChevronDown, ChevronsUpDown, History } from "lucide-react";
+import { Modal } from "@/shared/ui/Modal";
+import { StockHistoryChart } from "@/widgets/charts/StockHistoryChart";
 
 interface SortableHoldingsTableProps {
   holdings: StockPosition[];
   totalValue: number;
   previousQuarterHoldings?: StockPosition[];
+  quarters?: PortfolioQuarter[];
 }
 
 type SortField = "symbol" | "name" | "percent" | "shares" | "price" | "value" | "change";
@@ -19,14 +22,57 @@ interface SortState {
   direction: SortDirection;
 }
 
+const SortIcon = ({ field, currentSort }: { field: SortField; currentSort: SortState }) => {
+  if (currentSort.field !== field) {
+    return <ChevronsUpDown className="w-4 h-4 text-muted opacity-50" />;
+  }
+  return currentSort.direction === "desc" ? (
+    <ChevronDown className="w-4 h-4 text-primary" />
+  ) : (
+    <ChevronUp className="w-4 h-4 text-primary" />
+  );
+};
+
+interface SortableHeaderProps {
+  field: SortField;
+  children: React.ReactNode;
+  align?: "left" | "right";
+  currentSort: SortState;
+  onSort: (field: SortField) => void;
+}
+
+const SortableHeader = ({
+  field,
+  children,
+  align = "left",
+  currentSort,
+  onSort,
+}: SortableHeaderProps) => (
+  <th
+    className={`px-4 py-3 font-medium cursor-pointer hover:bg-background/80 transition-colors select-none ${
+      align === "right" ? "text-right" : "text-left"
+    } ${currentSort.field === field ? "text-primary" : ""}`}
+    onClick={() => onSort(field)}
+  >
+    <div
+      className={`flex items-center gap-1 ${align === "right" ? "justify-end" : "justify-start"}`}
+    >
+      {children}
+      <SortIcon field={field} currentSort={currentSort} />
+    </div>
+  </th>
+);
+
 export function SortableHoldingsTable({
   holdings,
   totalValue,
   previousQuarterHoldings,
+  quarters,
 }: SortableHoldingsTableProps) {
   const [sort, setSort] = useState<SortState>({ field: "percent", direction: "desc" });
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedStock, setSelectedStock] = useState<{ symbol: string; name: string } | null>(null);
 
   // Build a map of previous quarter shares for comparison
   const prevHoldingsMap = useMemo(() => {
@@ -37,7 +83,9 @@ export function SortableHoldingsTable({
   // Enrich holdings with calculated values
   const enrichedHoldings = useMemo(() => {
     return holdings.map((stock) => {
-      const reportedPrice = stock.value / stock.shares;
+      // SEC 13F reports value in thousands of dollars, so we divide by 1000 for actual USD
+      const actualValue = stock.value / 1000;
+      const reportedPrice = actualValue / stock.shares;
       const percent = (stock.value / totalValue) * 100;
       const prevStock = prevHoldingsMap.get(stock.cusip);
       const prevShares = prevStock?.shares || 0;
@@ -48,6 +96,7 @@ export function SortableHoldingsTable({
 
       return {
         ...stock,
+        value: actualValue,
         reportedPrice,
         percent,
         sharesChange,
@@ -105,41 +154,6 @@ export function SortableHoldingsTable({
     setCurrentPage(1);
   };
 
-  const SortIcon = ({ field }: { field: SortField }) => {
-    if (sort.field !== field) {
-      return <ChevronsUpDown className="w-4 h-4 text-muted opacity-50" />;
-    }
-    return sort.direction === "desc" ? (
-      <ChevronDown className="w-4 h-4 text-primary" />
-    ) : (
-      <ChevronUp className="w-4 h-4 text-primary" />
-    );
-  };
-
-  const SortableHeader = ({
-    field,
-    children,
-    align = "left",
-  }: {
-    field: SortField;
-    children: React.ReactNode;
-    align?: "left" | "right";
-  }) => (
-    <th
-      className={`px-4 py-3 font-medium cursor-pointer hover:bg-background/80 transition-colors select-none ${
-        align === "right" ? "text-right" : "text-left"
-      } ${sort.field === field ? "text-primary" : ""}`}
-      onClick={() => handleSort(field)}
-    >
-      <div
-        className={`flex items-center gap-1 ${align === "right" ? "justify-end" : "justify-start"}`}
-      >
-        {children}
-        <SortIcon field={field} />
-      </div>
-    </th>
-  );
-
   return (
     <div className="space-y-4">
       <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-lg">
@@ -151,22 +165,26 @@ export function SortableHoldingsTable({
                   <History className="w-4 h-4" />
                 </div>
               </th>
-              <SortableHeader field="symbol">티커</SortableHeader>
-              <SortableHeader field="name">종목명</SortableHeader>
-              <SortableHeader field="percent" align="right">
+              <SortableHeader field="symbol" currentSort={sort} onSort={handleSort}>
+                티커
+              </SortableHeader>
+              <SortableHeader field="name" currentSort={sort} onSort={handleSort}>
+                종목명
+              </SortableHeader>
+              <SortableHeader field="percent" align="right" currentSort={sort} onSort={handleSort}>
                 비중
               </SortableHeader>
-              <SortableHeader field="shares" align="right">
+              <SortableHeader field="shares" align="right" currentSort={sort} onSort={handleSort}>
                 보유 수량*
               </SortableHeader>
-              <SortableHeader field="price" align="right">
+              <SortableHeader field="price" align="right" currentSort={sort} onSort={handleSort}>
                 공시 가격*
               </SortableHeader>
-              <SortableHeader field="value" align="right">
+              <SortableHeader field="value" align="right" currentSort={sort} onSort={handleSort}>
                 평가액
               </SortableHeader>
               {previousQuarterHoldings && (
-                <SortableHeader field="change" align="right">
+                <SortableHeader field="change" align="right" currentSort={sort} onSort={handleSort}>
                   비중 변동
                 </SortableHeader>
               )}
@@ -186,8 +204,18 @@ export function SortableHoldingsTable({
                   {/* History Icon */}
                   <td className="px-4 py-3">
                     <button
-                      className="p-1.5 rounded-lg hover:bg-primary/10 text-secondary hover:text-primary transition-colors"
+                      className={`p-1.5 rounded-lg transition-colors ${
+                        quarters && quarters.length > 1
+                          ? "hover:bg-primary/10 text-secondary hover:text-primary cursor-pointer"
+                          : "text-muted cursor-not-allowed opacity-30"
+                      }`}
                       title="이력 보기"
+                      onClick={() => {
+                        if (quarters && quarters.length > 1) {
+                          setSelectedStock({ symbol: stock.symbol, name: stock.securityName });
+                        }
+                      }}
+                      disabled={!quarters || quarters.length <= 1}
                     >
                       <History className="w-4 h-4" />
                     </button>
@@ -305,6 +333,21 @@ export function SortableHoldingsTable({
           </div>
         </div>
       </div>
+      {/* Stock History Modal */}
+      {selectedStock && quarters && (
+        <Modal
+          isOpen={!!selectedStock}
+          onClose={() => setSelectedStock(null)}
+          title={`${selectedStock.symbol} 보유 이력`}
+          size="lg"
+        >
+          <StockHistoryChart
+            symbol={selectedStock.symbol}
+            securityName={selectedStock.name}
+            quarters={quarters}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

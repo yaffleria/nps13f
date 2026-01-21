@@ -32,73 +32,28 @@ async function loadTickerCache() {
     const data = await fs.readFile(TICKER_CACHE_PATH, "utf-8");
     tickerCache = JSON.parse(data);
     console.log(`Loaded ${Object.keys(tickerCache).length} entries from ticker cache.`);
-  } catch (e) {
+  } catch {
     console.log("No existing ticker cache found, starting fresh.");
     tickerCache = {};
   }
 }
 
+// ...
+
 // Helper to save cache
-async function saveTickerCache() {
+async function safeTickerCache() {
   try {
     await fs.mkdir(DATA_DIR, { recursive: true });
     await fs.writeFile(TICKER_CACHE_PATH, JSON.stringify(tickerCache, null, 2));
     console.log("Ticker cache saved.");
-  } catch (e) {
-    console.error("Failed to save ticker cache:", e);
+  } catch (err: unknown) {
+    console.error("Failed to save ticker cache:", err);
   }
 }
 
-// Helper to delay (rate limiting)
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// ...
 
-/**
- * Resolve Ticker from CUSIP or Name using Yahoo Finance API
- */
-async function resolveTicker(
-  cusip: string,
-  nameOfIssuer: string,
-): Promise<TickerCacheEntry | null> {
-  // 1. Check Cache
-  if (tickerCache[cusip]) {
-    return tickerCache[cusip];
-  }
-
-  // 2. Query Yahoo Finance
-  // Try CUSIP first as it's more specific
-  let result = await queryYahooFinance(cusip);
-
-  // 3. Fallback to Name search if CUSIP failed
-  if (!result || !result.symbol) {
-    // Clean up name for better search results
-    const cleanName = nameOfIssuer
-      .replace(/\s+/g, " ")
-      .replace(/ CORPORATION| CORP\.?| INC\.?| COMPANY| CO\.?| PLC| LTD\.?| AG| SA/gi, "")
-      .trim();
-
-    // Heuristic: If name is too short, might be ambiguous, but let's try
-    result = await queryYahooFinance(cleanName);
-  }
-
-  if (result && result.symbol) {
-    const entry: TickerCacheEntry = {
-      symbol: result.symbol,
-      securityName: result.shortname || result.longname || nameOfIssuer,
-      sector: result.sector || "Other",
-    };
-
-    // Save to cache
-    tickerCache[cusip] = entry;
-    // We auto-save periodically or at end, but here we can just update memory
-    return entry;
-  }
-
-  // Return null if resolution failed
-  // We might want to cache "not found" to avoid re-querying?
-  // For now let's just return null and fallback to basic heuristics later.
-  return null;
-}
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function queryYahooFinance(query: string): Promise<any | null> {
   const url = `https://query2.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(query)}`;
   try {
@@ -119,6 +74,7 @@ async function queryYahooFinance(query: string): Promise<any | null> {
 
     // Filter for Equity or ETF
     const equity = quotes.find(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (q: any) =>
         (q.quoteType === "EQUITY" || q.quoteType === "ETF" || q.quoteType === "MUTUALFUND") &&
         q.isYahooFinance,
@@ -129,161 +85,6 @@ async function queryYahooFinance(query: string): Promise<any | null> {
     console.warn(`Yahoo lookup failed for ${query}:`, e);
     return null;
   }
-}
-
-interface SECSubmission {
-  cik: string;
-  name: string;
-  filings: {
-    recent: {
-      accessionNumber: string[];
-      filingDate: string[];
-      reportDate: string[];
-      form: string[];
-      primaryDocument: string[];
-    };
-  };
-}
-
-interface Filing13F {
-  symbol: string;
-  securityName: string;
-  sector?: string; // Enhanced field
-  cusip: string;
-  shares: number;
-  value: number; // in USD
-  putCallShare: "PUT" | "CALL" | "SHARE" | null;
-  investmentDiscretion: string;
-  votingAuthority: {
-    sole: number;
-    shared: number;
-    none: number;
-  };
-}
-
-interface FilingPeriod {
-  date: string;
-  year: number;
-  quarter: number;
-  totalValue: number;
-  holdings: Filing13F[];
-}
-
-// --- Fetch Functions ---
-
-async function fetchSECSubmissions(): Promise<SECSubmission> {
-  const url = `${SEC_SUBMISSIONS_URL}/submissions/CIK${NPS_CIK}.json`;
-  console.log(`Fetching submissions from ${url}...`);
-
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent": SEC_USER_AGENT,
-      "Accept-Encoding": "gzip, deflate",
-      Host: "data.sec.gov",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch SEC submissions: ${response.status} ${response.statusText}`);
-  }
-
-  return response.json();
-}
-
-// Helper to batch process ticker resolution
-async function resolveHoldingsTickers(holdings: Filing13F[]): Promise<Filing13F[]> {
-  console.log(`Resolving tickers for ${holdings.length} holdings...`);
-
-  const resolvedHoldings: Filing13F[] = [];
-
-  // improved concurrency control (batches of 10)
-  const batchSize = 10;
-  for (let i = 0; i < holdings.length; i += batchSize) {
-    const batch = holdings.slice(i, i + batchSize);
-
-    const batchResults = await Promise.all(
-      batch.map(async (holding) => {
-        // Skip if we somehow already have a good symbol (unlikely from raw XML except heuristic)
-        // Actually, parseHoldingsFromXML only did basic extraction.
-
-        const { cusip, securityName } = holding;
-        const resolved = await resolveTicker(cusip, securityName);
-
-        if (resolved) {
-          return {
-            ...holding,
-            symbol: resolved.symbol,
-            securityName: resolved.securityName, // Use standardized name
-            sector: resolved.sector,
-          };
-        } else {
-          // Fallback: Use truncated name as pseudo-symbol
-          let symbol = securityName.split(" ")[0].replace(/[^A-Z]/g, "");
-          if (symbol.length > 5) symbol = symbol.substring(0, 5);
-          if (symbol.length === 0) symbol = "UNK";
-
-          return { ...holding, symbol };
-        }
-      }),
-    );
-
-    resolvedHoldings.push(...batchResults);
-    process.stdout.write(`.`); // progress indicator
-  }
-  console.log(" Done.");
-
-  // Save cache after each quarter/batch to be safe
-  await saveTickerCache();
-
-  return resolvedHoldings;
-}
-
-function parseHoldingsFromXML(xml: string): Filing13F[] {
-  const holdings: Filing13F[] = [];
-
-  // Remove namespaces
-  const cleanXml = xml.replace(/<(\/?)(?:\w+:)?([a-zA-Z0-9]+)/g, "<$1$2");
-
-  // Regex to iterate over each infoTable entry
-  const entryRegex = /<infoTable[^>]*>([\s\S]*?)<\/infoTable>/gi;
-  let match;
-
-  while ((match = entryRegex.exec(cleanXml)) !== null) {
-    const entry = match[1];
-
-    const getValue = (tag: string): string => {
-      const tagRegex = new RegExp(`<${tag}[^>]*>([^<]*)<\/${tag}>`, "i");
-      const m = entry.match(tagRegex);
-      return m ? m[1].trim() : "";
-    };
-
-    const nameOfIssuer = getValue("nameOfIssuer");
-    const valueStr = getValue("value");
-    const sharesStr = getValue("sshPrnamt");
-    const cusip = getValue("cusip");
-
-    if (!nameOfIssuer || !valueStr) continue;
-
-    const value = parseInt(valueStr) || 0;
-    const shares = parseInt(sharesStr) || 0;
-
-    holdings.push({
-      symbol: "", // Placeholder, will be resolved later
-      securityName: nameOfIssuer,
-      cusip,
-      shares,
-      value: value * 1000,
-      putCallShare: (getValue("putCall") || "SH") as Filing13F["putCallShare"],
-      investmentDiscretion: getValue("investmentDiscretion"),
-      votingAuthority: {
-        sole: parseInt(getValue("Sole")) || 0,
-        shared: parseInt(getValue("Shared")) || 0,
-        none: parseInt(getValue("None")) || 0,
-      },
-    });
-  }
-
-  return holdings;
 }
 
 async function parse13FXML(accessionNumber: string): Promise<Filing13F[]> {
@@ -319,6 +120,7 @@ async function parse13FXML(accessionNumber: string): Promise<Filing13F[]> {
   );
 
   let infoTableFile = xmlFiles.find(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (item: any) =>
       item.name.toLowerCase().includes("infotable") ||
       item.name.toLowerCase().includes("informationtable"),

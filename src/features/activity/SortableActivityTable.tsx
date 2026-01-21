@@ -25,6 +25,61 @@ interface SortState {
   direction: SortDirection;
 }
 
+const SortIcon = ({ field, currentSort }: { field: SortField; currentSort: SortState }) => {
+  if (currentSort.field !== field) {
+    return <ChevronsUpDown className="w-4 h-4 text-muted opacity-50" />;
+  }
+  return currentSort.direction === "desc" ? (
+    <ChevronDown className="w-4 h-4 text-primary" />
+  ) : (
+    <ChevronUp className="w-4 h-4 text-primary" />
+  );
+};
+
+interface SortableHeaderProps {
+  field: SortField;
+  children: React.ReactNode;
+  align?: "left" | "right";
+  currentSort: SortState;
+  onSort: (field: SortField) => void;
+}
+
+const SortableHeader = ({
+  field,
+  children,
+  align = "left",
+  currentSort,
+  onSort,
+}: SortableHeaderProps) => (
+  <th
+    className={`px-4 py-3 font-medium cursor-pointer hover:bg-background/80 transition-colors select-none ${
+      align === "right" ? "text-right" : "text-left"
+    } ${currentSort.field === field ? "text-primary" : ""}`}
+    onClick={() => onSort(field)}
+  >
+    <div
+      className={`flex items-center gap-1 ${align === "right" ? "justify-end" : "justify-start"}`}
+    >
+      {children}
+      <SortIcon field={field} currentSort={currentSort} />
+    </div>
+  </th>
+);
+
+const getActivityTypeLabel = (item: ActivityItem) => {
+  if (item.history === "new") return { label: "신규 편입", color: "bg-success/20 text-success" };
+  if (item.history === "exit") return { label: "전량 매도", color: "bg-negative/20 text-negative" };
+  if (item.sharesChanged > 0) return { label: "매수", color: "bg-success/20 text-success" };
+  return { label: "매도", color: "bg-negative/20 text-negative" };
+};
+
+const getActivityIcon = (item: ActivityItem) => {
+  if (item.history === "new") return <Plus className="w-3 h-3" />;
+  if (item.history === "exit") return <X className="w-3 h-3" />;
+  if (item.sharesChanged > 0) return <TrendingUp className="w-3 h-3" />;
+  return <TrendingDown className="w-3 h-3" />;
+};
+
 export function SortableActivityTable({ activity }: SortableActivityTableProps) {
   const [sort, setSort] = useState<SortState>({ field: "value", direction: "desc" });
   const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -83,56 +138,6 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
     setCurrentPage(1);
   };
 
-  const SortIcon = ({ field }: { field: SortField }) => {
-    if (sort.field !== field) {
-      return <ChevronsUpDown className="w-4 h-4 text-muted opacity-50" />;
-    }
-    return sort.direction === "desc" ? (
-      <ChevronDown className="w-4 h-4 text-primary" />
-    ) : (
-      <ChevronUp className="w-4 h-4 text-primary" />
-    );
-  };
-
-  const SortableHeader = ({
-    field,
-    children,
-    align = "left",
-  }: {
-    field: SortField;
-    children: React.ReactNode;
-    align?: "left" | "right";
-  }) => (
-    <th
-      className={`px-4 py-3 font-medium cursor-pointer hover:bg-background/80 transition-colors select-none ${
-        align === "right" ? "text-right" : "text-left"
-      } ${sort.field === field ? "text-primary" : ""}`}
-      onClick={() => handleSort(field)}
-    >
-      <div
-        className={`flex items-center gap-1 ${align === "right" ? "justify-end" : "justify-start"}`}
-      >
-        {children}
-        <SortIcon field={field} />
-      </div>
-    </th>
-  );
-
-  const getActivityTypeLabel = (item: ActivityItem) => {
-    if (item.history === "new") return { label: "신규 편입", color: "bg-success/20 text-success" };
-    if (item.history === "exit")
-      return { label: "전량 매도", color: "bg-negative/20 text-negative" };
-    if (item.sharesChanged > 0) return { label: "매수", color: "bg-success/20 text-success" };
-    return { label: "매도", color: "bg-negative/20 text-negative" };
-  };
-
-  const getActivityIcon = (item: ActivityItem) => {
-    if (item.history === "new") return <Plus className="w-3 h-3" />;
-    if (item.history === "exit") return <X className="w-3 h-3" />;
-    if (item.sharesChanged > 0) return <TrendingUp className="w-3 h-3" />;
-    return <TrendingDown className="w-3 h-3" />;
-  };
-
   return (
     <div className="space-y-4">
       {/* Filter Tabs */}
@@ -170,16 +175,22 @@ export function SortableActivityTable({ activity }: SortableActivityTableProps) 
         <table className="w-full text-sm">
           <thead className="bg-background/80 text-secondary border-b border-border">
             <tr>
-              <SortableHeader field="type">유형</SortableHeader>
-              <SortableHeader field="symbol">티커</SortableHeader>
-              <SortableHeader field="name">종목명</SortableHeader>
-              <SortableHeader field="change" align="right">
+              <SortableHeader field="type" currentSort={sort} onSort={handleSort}>
+                유형
+              </SortableHeader>
+              <SortableHeader field="symbol" currentSort={sort} onSort={handleSort}>
+                티커
+              </SortableHeader>
+              <SortableHeader field="name" currentSort={sort} onSort={handleSort}>
+                종목명
+              </SortableHeader>
+              <SortableHeader field="change" align="right" currentSort={sort} onSort={handleSort}>
                 수량 변동률
               </SortableHeader>
-              <SortableHeader field="shares" align="right">
+              <SortableHeader field="shares" align="right" currentSort={sort} onSort={handleSort}>
                 변동 수량
               </SortableHeader>
-              <SortableHeader field="value" align="right">
+              <SortableHeader field="value" align="right" currentSort={sort} onSort={handleSort}>
                 추정 금액
               </SortableHeader>
             </tr>

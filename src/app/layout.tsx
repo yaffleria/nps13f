@@ -69,6 +69,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `,
           }}
         />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1359213774659354"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <link
           rel="stylesheet"
           as="style"

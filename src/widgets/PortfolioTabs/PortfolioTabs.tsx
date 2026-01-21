@@ -8,6 +8,8 @@ import { QuarterSelector } from "@/widgets/QuarterSelector/QuarterSelector";
 import { processActivity } from "@/entities/portfolio/lib/process-activity";
 import { formatCompactNumber } from "@/shared/lib/format";
 import { BarChart3, TrendingUp, Briefcase, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Modal } from "@/shared/ui/Modal";
+import { PortfolioTrendChart } from "@/widgets/charts/PortfolioTrendChart";
 
 interface PortfolioTabsProps {
   quarters: PortfolioQuarter[];
@@ -17,6 +19,7 @@ interface PortfolioTabsProps {
 export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTabsProps) {
   const [selectedQuarterIndex, setSelectedQuarterIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<"holdings" | "activity">(initialTab);
+  const [showTrendModal, setShowTrendModal] = useState(false);
 
   const currentQuarter = quarters[selectedQuarterIndex];
   const previousQuarter = quarters[selectedQuarterIndex + 1];
@@ -69,7 +72,10 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
 
         {/* Right: Quarter Selector */}
         <div className="flex items-center gap-4">
-          <button className="px-4 py-2.5 bg-surface border border-border rounded-xl hover:bg-background hover:border-primary/50 transition-all flex items-center gap-2 text-secondary hover:text-foreground">
+          <button
+            onClick={() => setShowTrendModal(true)}
+            className="px-4 py-2.5 bg-surface border border-border rounded-xl hover:bg-background hover:border-primary/50 transition-all flex items-center gap-2 text-secondary hover:text-foreground"
+          >
             <BarChart3 className="w-4 h-4" />
             <span className="font-medium">포트폴리오 추이</span>
           </button>
@@ -151,6 +157,7 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
               holdings={currentQuarter.holdings}
               totalValue={currentQuarter.totalValue}
               previousQuarterHoldings={previousQuarter?.holdings}
+              quarters={quarters}
             />
           )}
         </div>
@@ -197,6 +204,16 @@ export function PortfolioTabs({ quarters, initialTab = "holdings" }: PortfolioTa
           매도했습니다.
         </p>
       </div>
+
+      {/* Portfolio Trend Modal */}
+      <Modal
+        isOpen={showTrendModal}
+        onClose={() => setShowTrendModal(false)}
+        title="포트폴리오 추이"
+        size="xl"
+      >
+        <PortfolioTrendChart quarters={quarters} />
+      </Modal>
     </div>
   );
 }
