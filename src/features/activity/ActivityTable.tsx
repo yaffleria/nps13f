@@ -2,8 +2,6 @@
 
 import { ActivityItem } from "@/entities/portfolio/types";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
-import { ArrowDown, ArrowUp, Minus, Plus } from "lucide-react";
-
 interface ActivityTableProps {
   activity: ActivityItem[];
 }
@@ -25,7 +23,6 @@ export function ActivityTable({ activity }: ActivityTableProps) {
         <tbody className="divide-y divide-border">
           {activity.map((item) => {
             const isBuy = item.sharesChanged > 0;
-            const ColorIcon = isBuy ? ArrowUp : ArrowDown;
             const colorClass = isBuy ? "text-success" : "text-negative";
             const bgColorClass = isBuy ? "bg-success/10" : "bg-negative/10";
             const Label = isBuy ? "BUY" : "SELL";
@@ -40,7 +37,7 @@ export function ActivityTable({ activity }: ActivityTableProps) {
                   </span>
                 </td>
                 <td className="px-6 py-4 font-semibold text-primary">{item.symbol}</td>
-                <td className="px-6 py-4 font-medium text-foreground max-w-[200px] truncate">
+                <td className="px-6 py-4 font-medium text-foreground max-w-50 truncate">
                   {item.name}
                 </td>
                 <td className={`px-6 py-4 text-right font-medium ${colorClass}`}>

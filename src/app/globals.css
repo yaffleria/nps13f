@@ -36,6 +36,23 @@
     color: var(--foreground);
     @apply antialiased;
   }
+
+  /* Ensure all interactive elements have pointer cursor */
+  button,
+  [role="button"],
+  [role="tab"],
+  select,
+  a,
+  input[type="checkbox"],
+  input[type="radio"],
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [disabled] {
+    cursor: not-allowed;
+  }
 }
 
 /* Utilities */

@@ -1,13 +1,7 @@
 "use client";
 
 import { StockPosition } from "@/entities/portfolio/types";
-import {
-  formatCompactNumber,
-  formatCurrency,
-  formatNumber,
-  formatPercent,
-} from "@/shared/lib/format";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
 
 interface HoldingsTableProps {
   holdings: StockPosition[];
@@ -36,7 +30,7 @@ export function HoldingsTable({ holdings, totalValue }: HoldingsTableProps) {
             return (
               <tr key={stock.cusip} className="group hover:bg-background/50 transition-colors">
                 <td className="px-6 py-4 font-semibold text-primary">{stock.symbol}</td>
-                <td className="px-6 py-4 font-medium text-foreground max-w-[200px] truncate">
+                <td className="px-6 py-4 font-medium text-foreground max-w-50 truncate">
                   {stock.securityName}
                 </td>
                 <td className="px-6 py-4 text-right">
