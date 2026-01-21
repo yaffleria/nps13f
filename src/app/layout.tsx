@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -166,16 +165,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
         />
+
+        {/* Google AdSense */}
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PID}`}
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary">
         <Providers>{children}</Providers>
         <GoogleAnalytics gaId={GA_TRACKING_ID} />
-        <Script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PID}`}
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
         <Analytics />
         <SpeedInsights />
       </body>
