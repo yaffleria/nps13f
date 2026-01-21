@@ -8,7 +8,7 @@ import "./globals.css";
 
 const GA_TRACKING_ID = "G-J6B01LT9W6";
 const ADSENSE_PID = "ca-pub-1359213774659354";
-const BASE_URL = "https://nps13f.com";
+const BASE_URL = "https://www.nps13f.com";
 
 // Viewport 설정 분리 (Next.js 14+ 권장사항)
 export const viewport: Viewport = {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | NPS 13F",
   },
   description:
-    "국민연금(NPS)의 SEC 13F 공시 기반 미국 주식 보유 현황을 확인하세요. 분기별 매수/매도 내역, 포트폴리오 비중, 종목별 상세 정보를 제공합니다. Apple, Microsoft, NVIDIA 등 주요 종목 투자 현황 분석.",
+    "국민연금(NPS)의 13F 공시 기반 미국 주식 보유 현황 및 매매 내역 분석. 애플, 엔비디아 등 주요 종목 투자 현황과 포트폴리오 변화를 확인하세요.",
   keywords: [
     // 핵심 키워드
     "국민연금",
@@ -93,7 +93,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "NPS 13F - 국민연금 미국주식 포트폴리오 트래커",
     description:
-      "국민연금(NPS)의 SEC 13F 공시 기반 미국 주식 보유 현황. 분기별 매수/매도 내역과 포트폴리오 분석. Apple, Microsoft, NVIDIA 등 빅테크 투자 현황 확인.",
+      "국민연금(NPS)의 미국 주식 보유 현황과 13F 포트폴리오 분석. 애플, 엔비디아 등 주요 종목의 분기별 매매 내역을 상세히 확인하세요.",
     type: "website",
     locale: "ko_KR",
     siteName: "NPS 13F",

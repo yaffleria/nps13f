@@ -13,7 +13,7 @@ import { ShareButton } from "@/shared/ui/ShareButton";
 export const metadata: Metadata = {
   title: "국민연금 13F - 미국주식 보유현황 & 매매내역 분석",
   description:
-    "국민연금(NPS)의 SEC 13F 공시 기반 미국 주식 보유 현황을 확인하세요. 분기별 매수/매도 내역, 포트폴리오 비중, Apple·Microsoft·NVIDIA 등 빅테크 투자 종목 상세 분석. 실시간 업데이트.",
+    "국민연금(NPS)의 13F 공시 기반 미국 주식 보유 현황 및 매매 내역 분석. 애플, 엔비디아 등 주요 종목 투자 현황과 포트폴리오 변화를 확인하세요.",
   keywords: [
     "국민연금",
     "NPS",
@@ -36,10 +36,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: "국민연금 13F - 미국주식 보유현황 & 매매내역",
     description:
-      "국민연금(NPS)의 SEC 13F 공시 기반 미국 주식 보유 현황. 분기별 매수/매도 내역과 포트폴리오 분석. Apple, Microsoft, NVIDIA 투자 현황 확인.",
+      "국민연금(NPS)의 미국 주식 보유 현황과 13F 포트폴리오 분석. 애플, 엔비디아 등 주요 종목의 분기별 매매 내역을 상세히 확인하세요.",
     type: "website",
     locale: "ko_KR",
-    url: "https://nps13f.com",
+    url: "https://www.nps13f.com",
   },
 };
 

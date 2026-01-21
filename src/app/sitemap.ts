@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { promises as fs } from "fs";
 import path from "path";
 
-const BASE_URL = "https://nps13f.com";
+const BASE_URL = "https://www.nps13f.com";
 
 interface PortfolioQuarter {
   date: string;
