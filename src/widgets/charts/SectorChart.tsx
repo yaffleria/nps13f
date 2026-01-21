@@ -59,7 +59,10 @@ export function SectorChart({ holdings }: SectorChartProps) {
               borderRadius: "8px",
             }}
             itemStyle={{ color: "#fff" }}
-            formatter={(value: number) => [`$${(value / 1000000000).toFixed(1)}B`, "Value"]}
+            formatter={(value) => {
+              const numValue = typeof value === "number" ? value : 0;
+              return [`$${(numValue / 1000000000).toFixed(1)}B`, "Value"];
+            }}
           />
         </PieChart>
       </ResponsiveContainer>
