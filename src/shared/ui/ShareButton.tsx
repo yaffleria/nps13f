@@ -55,7 +55,7 @@ export function ShareButton({ title, text, label = "공유하기" }: ShareButton
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 mb-6 sm:mb-0">
       {/* 기본 공유 (Web Share API) */}
       <button
         onClick={handleShare}
