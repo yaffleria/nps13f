@@ -19,21 +19,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { ClientOnly } from "@/shared/ui/ClientOnly";
-
-interface PortfolioQuarter {
-  date: string;
-  year: number;
-  quarter: number;
-  totalValue: number;
-  holdings: {
-    symbol: string;
-    securityName: string;
-    cusip: string;
-    shares: number;
-    value: number;
-    sector: string;
-  }[];
-}
+import { PortfolioQuarter } from "@/entities/portfolio/types";
 
 const COLORS = [
   "#3B82F6",

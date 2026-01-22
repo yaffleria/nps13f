@@ -1,23 +1,9 @@
 import { MetadataRoute } from "next";
 import { promises as fs } from "fs";
 import path from "path";
+import { PortfolioQuarter } from "@/entities/portfolio/types";
 
 const BASE_URL = "https://www.nps13f.com";
-
-interface PortfolioQuarter {
-  date: string;
-  year: number;
-  quarter: number;
-  totalValue: number;
-  holdings: {
-    symbol: string;
-    securityName: string;
-    cusip: string;
-    shares: number;
-    value: number;
-    sector: string;
-  }[];
-}
 
 async function getPortfolioData(): Promise<PortfolioQuarter[]> {
   const filePath = path.join(process.cwd(), "src/shared/data/sec-data.json");
@@ -72,6 +58,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
+    },
+    {
+      url: `${BASE_URL}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.5,
     },
   ];
 
