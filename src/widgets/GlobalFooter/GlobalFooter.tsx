@@ -8,44 +8,75 @@ export function GlobalFooter({ className = "" }: GlobalFooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      className={`border-t border-border mt-16 ${className}`}
-      role="contentinfo"
-    >
-      <div className="container mx-auto px-6">
+    <footer className={`border-t border-border mt-16 ${className}`} role="contentinfo">
+      <div className="container mx-auto px-6 py-10">
         {/* 메인 콘텐츠 영역 */}
-        <div className="max-w-3xl mx-auto text-center space-y-10">
-          {/* 네비게이션 */}
-          <nav className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm mb-2" aria-label="푸터 네비게이션">
-            <Link href="/" className="px-3 py-2 text-secondary hover:text-foreground transition-colors">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          {/* 주요 네비게이션 */}
+          <nav
+            className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm"
+            aria-label="푸터 메인 네비게이션"
+          >
+            <Link
+              href="/"
+              className="px-3 py-2 text-secondary hover:text-foreground transition-colors"
+            >
               포트폴리오
             </Link>
-            <Link href="/sectors" className="px-3 py-2 text-secondary hover:text-foreground transition-colors">
+            <Link
+              href="/sectors"
+              className="px-3 py-2 text-secondary hover:text-foreground transition-colors"
+            >
               섹터분석
             </Link>
-            <Link href="/reports" className="px-3 py-2 text-secondary hover:text-foreground transition-colors">
+            <Link
+              href="/reports"
+              className="px-3 py-2 text-secondary hover:text-foreground transition-colors"
+            >
               분기리포트
             </Link>
-            <Link href="/compare" className="px-3 py-2 text-secondary hover:text-foreground transition-colors">
+            <Link
+              href="/compare"
+              className="px-3 py-2 text-secondary hover:text-foreground transition-colors"
+            >
               종목비교
             </Link>
           </nav>
 
           {/* 설명 */}
-          <p className="text-sm text-muted leading-relaxed mb-1">
+          <p className="text-sm text-muted leading-relaxed">
             SEC 13F 공시 기반 국민연금 미국 주식 포트폴리오 분석 서비스
           </p>
 
           {/* 면책 조항 */}
-          <p className="text-xs text-muted/70 leading-loose mb-1">
-            본 사이트는 투자 권유 목적이 아닙니다.<br />
+          <p className="text-xs text-muted/70 leading-loose">
+            본 사이트는 투자 권유 목적이 아닙니다.
+            <br />
             모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다.
           </p>
 
+          {/* 법적 페이지 링크 */}
+          <nav
+            className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs"
+            aria-label="법적 안내"
+          >
+            <Link href="/about" className="text-muted hover:text-secondary transition-colors">
+              서비스 소개
+            </Link>
+            <span className="text-muted/40">|</span>
+            <Link href="/privacy" className="text-muted hover:text-secondary transition-colors">
+              개인정보처리방침
+            </Link>
+            <span className="text-muted/40">|</span>
+            <Link href="/terms" className="text-muted hover:text-secondary transition-colors">
+              이용약관
+            </Link>
+          </nav>
+
           {/* 저작권 */}
-          <div className="pt-6 text-xs text-muted/60">
+          <div className="pt-4 text-xs text-muted/60">
             <p>
-              © {currentYear} NPS 13F · 
+              © {currentYear} NPS 13F ·
               <a
                 href="https://x.com/charlotteprism"
                 target="_blank"
@@ -61,4 +92,3 @@ export function GlobalFooter({ className = "" }: GlobalFooterProps) {
     </footer>
   );
 }
-
