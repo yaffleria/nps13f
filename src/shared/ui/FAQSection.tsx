@@ -20,26 +20,8 @@ export function FAQSection({ items, title = "자주 묻는 질문" }: FAQSection
     setOpenIndex((prev) => (prev === index ? null : index));
   };
 
-  // FAQPage JSON-LD 생성
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: items.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  };
-
   return (
     <section className="mt-8 mb-8 p-6 bg-surface/30 rounded-2xl border border-border">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
       <h2 className="text-xl font-bold mb-5 text-foreground">{title}</h2>
       <div className="space-y-3 mt-4">
         {items.map((item, index) => {
