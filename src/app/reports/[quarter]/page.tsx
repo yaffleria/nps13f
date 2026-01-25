@@ -6,7 +6,6 @@ import { notFound } from "next/navigation";
 import { PortfolioQuarter } from "@/entities/portfolio/types";
 import { processActivity } from "@/entities/portfolio/lib/process-activity";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
-import { generateQuarterlyInsights } from "@/shared/lib/insights";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
 import { FadeIn } from "@/shared/ui/FadeIn";
@@ -21,7 +20,6 @@ import {
   Minus,
   BarChart3,
   Briefcase,
-  Sparkles,
 } from "lucide-react";
 
 interface ReportPageProps {
@@ -114,9 +112,6 @@ export default async function ReportPage({ params }: ReportPageProps) {
     }))
     .sort((a, b) => b.value - a.value)
     .slice(0, 10);
-
-  // 인사이트 생성
-  const insights = generateQuarterlyInsights(currentQuarter, previousQuarter);
 
   // BreadcrumbList JSON-LD
   const breadcrumbJsonLd = {
@@ -252,34 +247,6 @@ export default async function ReportPage({ params }: ReportPageProps) {
                 <p className="text-xl sm:text-2xl font-bold text-negative">{sells.length}건</p>
               </div>
             </div>
-
-            {/* 인사이트 카드 */}
-            {insights.length > 0 && (
-              <div className="mb-8 px-4 bg-surface/50 rounded-2xl border border-border">
-                <h2 className="text-lg mt-4 font-bold mb-3 flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-accent" />
-                  이번 분기 주요 하이라이트
-                </h2>
-                <ul className="space-y-2 mb-4">
-                  {insights.map((insight, i) => (
-                    <li key={i} className="flex items-start gap-2 text-secondary">
-                      {insight.type === "top_buy" ? (
-                        <TrendingUp className="w-4 h-4 text-success mt-0.5 shrink-0" />
-                      ) : insight.type === "top_sell" ? (
-                        <TrendingDown className="w-4 h-4 text-negative mt-0.5 shrink-0" />
-                      ) : insight.type === "new_entry" ? (
-                        <Plus className="w-4 h-4 text-success mt-0.5 shrink-0" />
-                      ) : insight.type === "exit" ? (
-                        <Minus className="w-4 h-4 text-negative mt-0.5 shrink-0" />
-                      ) : (
-                        <span className="w-4 h-4 shrink-0" />
-                      )}
-                      <span>{insight.text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
 
             {/* 상위 10개 종목 */}
             <section className="mb-8">

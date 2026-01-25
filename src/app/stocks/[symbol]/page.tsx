@@ -5,13 +5,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PortfolioQuarter, StockPosition } from "@/entities/portfolio/types";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
-import { generateStockInsight } from "@/shared/lib/insights";
-import { generateStockFAQ } from "@/shared/lib/faq";
 import { StockHistoryChart } from "@/widgets/charts/StockHistoryChart";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { ShareButton } from "@/shared/ui/ShareButton";
-import { FAQSection } from "@/shared/ui/FAQSection";
 
 import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
 import { ArrowLeft, TrendingUp, TrendingDown, Calendar, Building2, BarChart3 } from "lucide-react";
@@ -147,27 +144,6 @@ export default async function StockPage({ params }: StockPageProps) {
     { buyCount: 0, sellCount: 0, newEntries: 0 },
   );
 
-  // 분기 라벨
-  const quarterLabel = `${currentQuarter.year}년 ${currentQuarter.quarter}분기`;
-
-  // 종목 인사이트 생성
-  const stockInsight = currentStock
-    ? generateStockInsight(currentStock, previousStock, quarterLabel)
-    : null;
-
-  // FAQ 데이터 생성
-  const faqItems = currentStock
-    ? generateStockFAQ(
-        stockInfo.symbol,
-        stockInfo.securityName,
-        shares,
-        actualValue,
-        portfolioPercent,
-        sharesChange,
-        quarterLabel,
-      )
-    : [];
-
   // JSON-LD 구조화 데이터
   const jsonLd = {
     "@context": "https://schema.org",
@@ -259,10 +235,6 @@ export default async function StockPage({ params }: StockPageProps) {
                     )}
                   </div>
                   <p className="text-xl text-foreground font-medium">{stockInfo.securityName}</p>
-                  {/* 인사이트 문구 */}
-                  {stockInsight && (
-                    <p className="mt-3 text-secondary text-base leading-relaxed">{stockInsight}</p>
-                  )}
                 </div>
                 <ShareButton
                   title={`${stockInfo.symbol} (${stockInfo.securityName}) - 국민연금 보유 현황`}
@@ -429,11 +401,6 @@ export default async function StockPage({ params }: StockPageProps) {
                 </table>
               </div>
             </section>
-
-            {/* FAQ 섹션 */}
-            {faqItems.length > 0 && (
-              <FAQSection items={faqItems} title={`${stockInfo.symbol} 관련 자주 묻는 질문`} />
-            )}
           </FadeIn>
         </main>
 
