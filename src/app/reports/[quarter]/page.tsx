@@ -11,7 +11,7 @@ import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { ShareButton } from "@/shared/ui/ShareButton";
-import { AdBanner } from "@/shared/ui/AdBanner";
+
 import {
   ArrowLeft,
   Calendar,
@@ -280,11 +280,6 @@ export default async function ReportPage({ params }: ReportPageProps) {
                 </ul>
               </div>
             )}
-
-            {/* 광고 배너 */}
-            <div className="mb-8">
-              <AdBanner slot="REPORT_HEADER_AD" format="horizontal" />
-            </div>
 
             {/* 상위 10개 종목 */}
             <section className="mb-8">

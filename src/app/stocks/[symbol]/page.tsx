@@ -12,7 +12,7 @@ import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { ShareButton } from "@/shared/ui/ShareButton";
 import { FAQSection } from "@/shared/ui/FAQSection";
-import { AdBanner } from "@/shared/ui/AdBanner";
+
 import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
 import { ArrowLeft, TrendingUp, TrendingDown, Calendar, Building2, BarChart3 } from "lucide-react";
 
@@ -190,9 +190,7 @@ export default async function StockPage({ params }: StockPageProps) {
   };
 
   // BreadcrumbList JSON-LD
-  const sectorSlug = stockInfo.sector
-    ? stockInfo.sector.toLowerCase().replace(/ /g, "-")
-    : "other";
+  const sectorSlug = stockInfo.sector ? stockInfo.sector.toLowerCase().replace(/ /g, "-") : "other";
 
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -232,11 +230,6 @@ export default async function StockPage({ params }: StockPageProps) {
       <div className="min-h-screen bg-background text-foreground font-sans">
         <GlobalHeader />
 
-        {/* 헤더 아래 광고 배너 */}
-        <div className="container mx-auto px-4 pt-4">
-          <AdBanner slot="STOCK_HEADER_AD" format="horizontal" />
-        </div>
-
         <main className="container mx-auto px-4 py-8">
           <FadeIn>
             {/* 뒤로가기 */}
@@ -268,9 +261,7 @@ export default async function StockPage({ params }: StockPageProps) {
                   <p className="text-xl text-foreground font-medium">{stockInfo.securityName}</p>
                   {/* 인사이트 문구 */}
                   {stockInsight && (
-                    <p className="mt-3 text-secondary text-base leading-relaxed">
-                      {stockInsight}
-                    </p>
+                    <p className="mt-3 text-secondary text-base leading-relaxed">{stockInsight}</p>
                   )}
                 </div>
                 <ShareButton
@@ -441,16 +432,8 @@ export default async function StockPage({ params }: StockPageProps) {
 
             {/* FAQ 섹션 */}
             {faqItems.length > 0 && (
-              <FAQSection
-                items={faqItems}
-                title={`${stockInfo.symbol} 관련 자주 묻는 질문`}
-              />
+              <FAQSection items={faqItems} title={`${stockInfo.symbol} 관련 자주 묻는 질문`} />
             )}
-
-            {/* 하단 광고 */}
-            <div className="mt-8">
-              <AdBanner slot="STOCK_FOOTER_AD" format="auto" />
-            </div>
           </FadeIn>
         </main>
 

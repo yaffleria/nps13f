@@ -7,7 +7,7 @@ import { formatCompactNumber } from "@/shared/lib/format";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
 import { FadeIn } from "@/shared/ui/FadeIn";
-import { AdBanner } from "@/shared/ui/AdBanner";
+
 import { Calendar, ArrowRight, TrendingUp, TrendingDown } from "lucide-react";
 
 async function getPortfolioData(): Promise<PortfolioQuarter[]> {
@@ -58,11 +58,6 @@ export default async function ReportsPage() {
                 국민연금의 SEC 13F 공시 기반 분기별 미국 주식 포트폴리오 현황
               </p>
             </header>
-
-            {/* 광고 배너 */}
-            <div className="mb-6">
-              <AdBanner slot="9828624569" format="horizontal" />
-            </div>
 
             <div className="space-y-4">
               {data.map((quarter, index) => {

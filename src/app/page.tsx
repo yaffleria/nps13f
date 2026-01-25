@@ -9,7 +9,7 @@ import { formatCompactNumber } from "@/shared/lib/format";
 import { generateQuarterlyInsights } from "@/shared/lib/insights";
 import { getAllJsonLd } from "@/shared/lib/jsonLd";
 import { ShareButton } from "@/shared/ui/ShareButton";
-import { AdBanner } from "@/shared/ui/AdBanner";
+
 import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
 import { TrendingUp, TrendingDown, Sparkles } from "lucide-react";
 
@@ -128,10 +128,6 @@ export default async function PortfolioPage({
               </div>
             </header>
 
-            {/* 광고 배너 */}
-            <div className="mb-6">
-              <AdBanner slot="MAIN_HEADER_AD" format="horizontal" />
-            </div>
             {/* SEO용 숨겨진 키워드 텍스트 (스크린 리더 접근 가능) */}
             <div className="sr-only">
               <h2>

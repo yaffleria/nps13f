@@ -1,13 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { GoogleAnalytics } from "@next/third-parties/google";
+
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Providers } from "./providers";
 import { KakaoScript } from "@/shared/ui/KakaoScript";
 import "./globals.css";
 
-const GA_TRACKING_ID = "G-J6B01LT9W6";
-const ADSENSE_PID = "ca-pub-1359213774659354";
 const BASE_URL = "https://www.nps13f.com";
 
 // Viewport 설정 분리 (Next.js 14+ 권장사항)
@@ -166,8 +164,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* 성능 최적화: DNS Prefetch & Preconnect */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="//pagead2.googlesyndication.com" />
+
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
 
@@ -178,18 +175,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
         />
-
-        {/* Google AdSense */}
-        <script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PID}`}
-          crossOrigin="anonymous"
-        />
       </head>
       <body className="bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary">
         <Providers>{children}</Providers>
         <KakaoScript />
-        <GoogleAnalytics gaId={GA_TRACKING_ID} />
+
         {process.env.NODE_ENV === "production" && process.env.VERCEL === "1" && (
           <>
             <Analytics />

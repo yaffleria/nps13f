@@ -9,7 +9,7 @@ import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { ShareButton } from "@/shared/ui/ShareButton";
-import { AdBanner } from "@/shared/ui/AdBanner";
+
 import { ArrowLeft, Building2, TrendingUp, TrendingDown } from "lucide-react";
 
 interface SectorPageProps {
@@ -237,11 +237,6 @@ export default async function SectorPage({ params }: SectorPageProps) {
                   )}
                 </div>
               </div>
-            </div>
-
-            {/* 광고 배너 */}
-            <div className="mb-8">
-              <AdBanner slot="9828624569" format="horizontal" />
             </div>
 
             {/* 종목 테이블 */}

@@ -6,12 +6,12 @@ import { FadeIn } from "@/shared/ui/FadeIn";
 import { Mail, MessageCircle, Clock, ExternalLink } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "문의하기 - NPS 13F",
+  title: "Contact Us - NPS 13F",
   description:
-    "NPS 13F 서비스에 대한 문의, 피드백, 버그 리포트 등을 보내주세요. 빠른 시간 내에 답변드리겠습니다.",
+    "Contact us for inquiries, feedback, or bug reports regarding NPS 13F. We will get back to you as soon as possible.",
   openGraph: {
-    title: "문의하기 - NPS 13F",
-    description: "NPS 13F 서비스에 대한 문의 및 피드백",
+    title: "Contact Us - NPS 13F",
+    description: "Inquiries and feedback for NPS 13F",
     type: "website",
   },
   robots: {
@@ -24,43 +24,43 @@ export default function ContactPage() {
   const contactMethods = [
     {
       icon: Mail,
-      title: "이메일",
-      description: "서비스 관련 문의, 제안, 버그 리포트 등",
+      title: "Email",
+      description: "Business inquiries, suggestions, bug reports, etc.",
       link: "mailto:yaffleria@gmail.com",
       linkText: "yaffleria@gmail.com",
-      responseTime: "보통 1-2일 내 답변",
+      responseTime: "Usually reply within 1-2 days",
       isExternal: false,
     },
     {
       icon: MessageCircle,
-      title: "X",
-      description: "빠른 문의, 실시간 업데이트 확인",
+      title: "X (Twitter)",
+      description: "Quick inquiries, check for live updates",
       link: "https://x.com/charlotteprism",
       linkText: "@charlotteprism",
-      responseTime: "보통 몇 시간 내 답변",
+      responseTime: "Usually reply within a few hours",
       isExternal: true,
     },
   ];
 
   const faqItems = [
     {
-      question: "데이터는 얼마나 자주 업데이트되나요?",
+      question: "How often is the data updated?",
       answer:
-        "SEC 13F 보고서는 분기별로 제출됩니다. 새로운 공시가 발표되면 빠르게 데이터를 업데이트합니다. 보통 제출 후 1-2일 내에 반영됩니다.",
+        "SEC 13F reports are filed quarterly. We data update as soon as new filings are released. Usually, it reflects within 1-2 days after filing.",
     },
     {
-      question: "특정 종목에 대한 정보를 추가해 주실 수 있나요?",
+      question: "Can you add information for a specific stock?",
       answer:
-        "국민연금이 13F 보고서에 공시한 모든 종목은 자동으로 서비스에 반영됩니다. 국민연금이 보유하지 않은 종목은 표시되지 않습니다.",
+        "All stocks disclosed in the National Pension Service's 13F reports are automatically reflected in the service. Stocks not held by the National Pension Service are not displayed.",
     },
     {
-      question: "데이터 오류를 발견했어요.",
+      question: "I found a data error.",
       answer:
-        "데이터 정확성은 저에게 매우 중요합니다. 오류를 발견하시면 이메일이나 X DM으로 알려주세요. 빠르게 확인 후 수정하겠습니다.",
+        "Data accuracy is very important to us. If you find an error, please let us know via email or X DM. We will verify and fix it as soon as possible.",
     },
     {
-      question: "광고 또는 협업 문의는 어떻게 하나요?",
-      answer: "비즈니스 관련 문의는 이메일(yaffleria@gmail.com)로 연락 주세요.",
+      question: "How can I contact you for advertising or collaboration?",
+      answer: "For business inquiries, please contact us via email (yaffleria@gmail.com).",
     },
   ];
 
@@ -74,18 +74,20 @@ export default function ContactPage() {
             {/* Hero Section */}
             <header className="mb-16 text-center">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 bg-linear-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                문의하기
+                Contact Us
               </h1>
               <p className="text-xl text-secondary max-w-2xl mx-auto leading-relaxed">
-                NPS 13F 서비스에 대한 문의, 피드백, 제안 사항을 보내주세요.
+                Please send us your inquiries, feedback, or suggestions for NPS 13F.
                 <br />
-                빠른 시간 내에 답변드리겠습니다.
+                We will respond as soon as possible.
               </p>
             </header>
 
             {/* Contact Methods */}
             <section className="mb-16">
-              <h2 className="text-2xl font-bold text-foreground mb-8 text-center">연락 방법</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-8 text-center">
+                Contact Methods
+              </h2>
               <div className="grid sm:grid-cols-2 gap-6">
                 {contactMethods.map((method, index) => (
                   <a
@@ -122,29 +124,29 @@ export default function ContactPage() {
             {/* What to Include */}
             <section className="mb-16">
               <h2 className="text-2xl font-bold text-foreground mb-6">
-                문의 시 포함하면 좋은 정보
+                What to Include in Your Message
               </h2>
               <div className="bg-surface/50 rounded-2xl border border-border p-6 sm:p-8">
                 <ul className="space-y-4 text-secondary">
                   <li className="flex items-start gap-3">
                     <span className="text-primary font-bold">•</span>
                     <div>
-                      <strong className="text-foreground">버그 리포트의 경우:</strong> 발생한 페이지
-                      URL, 브라우저 종류, 스크린샷(가능하다면)
+                      <strong className="text-foreground">For Bug Reports:</strong> Problematic Page
+                      URL, Browser Type, Screenshot (if possible)
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-primary font-bold">•</span>
                     <div>
-                      <strong className="text-foreground">데이터 오류의 경우:</strong> 해당 종목
-                      또는 페이지, 예상되는 올바른 값, SEC 원본 링크(가능하다면)
+                      <strong className="text-foreground">For Data Errors:</strong> The stock symbol
+                      or page, expected value, link to the original SEC source (if possible)
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
                     <span className="text-primary font-bold">•</span>
                     <div>
-                      <strong className="text-foreground">기능 제안의 경우:</strong> 원하시는 기능에
-                      대한 상세한 설명, 사용 사례
+                      <strong className="text-foreground">For Feature Suggestions:</strong> Detailed
+                      description of the desired feature and use case
                     </div>
                   </li>
                 </ul>
@@ -153,7 +155,9 @@ export default function ContactPage() {
 
             {/* FAQ */}
             <section className="mb-16">
-              <h2 className="text-2xl font-bold text-foreground mb-8">자주 묻는 질문</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-8">
+                Frequently Asked Questions
+              </h2>
               <div className="space-y-4">
                 {faqItems.map((item, index) => (
                   <details
@@ -188,11 +192,11 @@ export default function ContactPage() {
             <section className="mb-16">
               <div className="bg-primary/5 rounded-2xl border border-primary/20 p-6 sm:p-8 text-center">
                 <Clock className="w-10 h-10 text-primary mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">응답 시간 안내</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-2">Response Time</h3>
                 <p className="text-secondary text-sm leading-relaxed max-w-xl mx-auto">
-                  문의하신 내용은 최대한 빠르게 확인하고 답변드리겠습니다. 일반적으로 이메일은
-                  1-2일, X는 몇 시간 내에 답변을 드립니다. 업무 외 시간이나 주말에는 답변이 다소
-                  지연될 수 있는 점 양해 부탁드립니다.
+                  We check inquiries and respond as quickly as possible. Generally, we reply via
+                  email within 1-2 days and via X within a few hours. Please note that responses may
+                  be delayed outside of business hours or on weekends.
                 </p>
               </div>
             </section>
@@ -201,19 +205,19 @@ export default function ContactPage() {
             <footer className="pt-8 border-t border-border text-center">
               <div className="flex flex-wrap justify-center gap-4 text-sm">
                 <Link href="/" className="text-primary hover:underline">
-                  홈으로 돌아가기
-                </Link>
-                <span className="text-muted">|</span>
-                <Link href="/about" className="text-primary hover:underline">
-                  서비스 소개
+                  Home
                 </Link>
                 <span className="text-muted">|</span>
                 <Link href="/privacy" className="text-primary hover:underline">
-                  개인정보처리방침
+                  Privacy Policy
                 </Link>
                 <span className="text-muted">|</span>
                 <Link href="/terms" className="text-primary hover:underline">
-                  이용약관
+                  Terms of Service
+                </Link>
+                <span className="text-muted">|</span>
+                <Link href="/disclaimer" className="text-primary hover:underline">
+                  Disclaimer
                 </Link>
               </div>
             </footer>

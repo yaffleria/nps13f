@@ -43,37 +43,45 @@ export function GlobalFooter({ className = "" }: GlobalFooterProps) {
             </Link>
           </nav>
 
-          {/* 설명 */}
+          {/* Description */}
           <p className="text-sm text-muted leading-relaxed">
-            SEC 13F 공시 기반 국민연금 미국 주식 포트폴리오 분석 서비스
+            NPS US Stock Portfolio Analysis Service based on SEC 13F Filings
           </p>
 
-          {/* 면책 조항 */}
+          {/* Disclaimer */}
           <p className="text-xs text-muted/70 leading-loose">
-            본 사이트는 투자 권유 목적이 아닙니다.
+            This site is not intended for investment advice.
             <br />
-            모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다.
+            All investment decisions must be made at your own discretion and responsibility.
           </p>
 
-          {/* 법적 페이지 링크 */}
+          {/* Legal Pages Links */}
           <nav
             className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs"
-            aria-label="법적 안내"
+            aria-label="Legal Navigation"
           >
             <Link href="/about" className="text-muted hover:text-secondary transition-colors">
-              서비스 소개
-            </Link>
-            <span className="text-muted/40">|</span>
-            <Link href="/privacy" className="text-muted hover:text-secondary transition-colors">
-              개인정보처리방침
+              About
             </Link>
             <span className="text-muted/40">|</span>
             <Link href="/terms" className="text-muted hover:text-secondary transition-colors">
-              이용약관
+              Terms
+            </Link>
+            <span className="text-muted/40">|</span>
+            <Link href="/privacy" className="text-muted hover:text-secondary transition-colors">
+              Privacy
+            </Link>
+            <span className="text-muted/40">|</span>
+            <Link href="/disclaimer" className="text-muted hover:text-secondary transition-colors">
+              Disclaimer
+            </Link>
+            <span className="text-muted/40">|</span>
+            <Link href="/contact" className="text-muted hover:text-secondary transition-colors">
+              Contact
             </Link>
           </nav>
 
-          {/* 저작권 */}
+          {/* Copyright */}
           <div className="pt-4 text-xs text-muted/60">
             <p>
               © {currentYear} NPS 13F ·

@@ -5,8 +5,9 @@ import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
 import { FadeIn } from "@/shared/ui/FadeIn";
 
 export const metadata: Metadata = {
-  title: "개인정보처리방침 - NPS 13F",
-  description: "NPS 13F 개인정보처리방침. 개인정보 수집, 이용, 보호에 관한 정책을 안내합니다.",
+  title: "Privacy Policy - NPS 13F",
+  description:
+    "Privacy Policy for NPS 13F. Learn about our personal information collection, usage, and protection policies.",
   robots: {
     index: true,
     follow: true,
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
-  const currentDate = "2026년 1월 22일";
-  const effectiveDate = "2026년 1월 22일";
+  const currentDate = "January 22, 2026";
+  const effectiveDate = "January 22, 2026";
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
@@ -26,195 +27,158 @@ export default function PrivacyPage() {
           <article className="max-w-4xl mx-auto prose prose-invert prose-lg">
             <header className="mb-12 text-center">
               <h1 className="text-3xl sm:text-4xl font-bold mb-4 bg-linear-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                개인정보처리방침
+                Privacy Policy
               </h1>
               <p className="text-secondary">
-                시행일: {effectiveDate} | 최종 수정일: {currentDate}
+                Effective Date: {effectiveDate} | Last Updated: {currentDate}
               </p>
             </header>
 
             <div className="space-y-10 text-secondary leading-relaxed">
-              {/* 개요 */}
+              {/* Overview */}
               <section>
-                <h2 className="text-xl font-bold text-foreground mb-4">1. 개요</h2>
+                <h2 className="text-xl font-bold text-foreground mb-4">1. Overview</h2>
                 <p>
-                  NPS 13F (이하 &quot;서비스&quot;)는 이용자의 개인정보를 중요시하며, 「개인정보
-                  보호법」, 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」 등 관련 법령을
-                  준수합니다.
+                  NPS 13F (hereinafter referred to as &quot;Service&quot;) values your privacy and
+                  complies with relevant laws such as the Personal Information Protection Act.
                 </p>
                 <p className="mt-3">
-                  본 개인정보처리방침은 서비스 이용 시 수집되는 개인정보의 항목, 수집 및 이용 목적,
-                  보유 기간, 제3자 제공, 이용자의 권리 등에 대해 안내합니다.
+                  This Privacy Policy explains what personal information we collect, how we use it,
+                  how long we retain it, third-party provision, and your rights.
                 </p>
               </section>
 
-              {/* 수집하는 개인정보 */}
+              {/* Information Collected */}
               <section>
                 <h2 className="text-xl font-bold text-foreground mb-4">
-                  2. 수집하는 개인정보 항목
+                  2. Information We Collect
                 </h2>
                 <p>
-                  서비스는 별도의 회원가입 없이 이용 가능하며, 다음과 같은 정보가 자동으로 수집될 수
-                  있습니다:
+                  The Service can be used without registration. However, the following information
+                  may be automatically collected:
                 </p>
                 <ul className="list-disc pl-6 mt-3 space-y-2">
                   <li>
-                    <strong>자동 수집 정보:</strong> IP 주소, 브라우저 유형, 운영체제, 방문 일시,
-                    페이지 열람 기록, 쿠키, 접속 로그
+                    <strong>Automatically Collected Information:</strong> IP address, browser type,
+                    operating system, visit time, page view history, cookies, access logs
                   </li>
                   <li>
-                    <strong>기기 정보:</strong> 기기 식별자, 화면 해상도, 언어 설정
+                    <strong>Device Information:</strong> Device identifier, screen resolution,
+                    language settings
                   </li>
                 </ul>
               </section>
 
-              {/* 개인정보 수집 및 이용 목적 */}
+              {/* Purpose of Collection */}
               <section>
                 <h2 className="text-xl font-bold text-foreground mb-4">
-                  3. 개인정보 수집 및 이용 목적
+                  3. Purpose of Collection and Use
                 </h2>
-                <p>수집된 정보는 다음의 목적으로 이용됩니다:</p>
+                <p>The collected information is used for the following purposes:</p>
                 <ul className="list-disc pl-6 mt-3 space-y-2">
-                  <li>서비스 제공 및 운영</li>
-                  <li>서비스 이용 통계 분석 및 개선</li>
-                  <li>부정 이용 방지 및 서비스 안정성 확보</li>
-                  <li>맞춤형 광고 제공 (제3자 광고 서비스 이용 시)</li>
+                  <li>Service provision and operation</li>
+                  <li>Service usage analysis and improvement</li>
+                  <li>Prevention of fraudulent use and ensuring service stability</li>
+                  <li>
+                    Provision of personalized advertisements (when using third-party ad services)
+                  </li>
                 </ul>
               </section>
 
-              {/* 쿠키 및 추적 기술 */}
+              {/* Cookies */}
               <section>
                 <h2 className="text-xl font-bold text-foreground mb-4">
-                  4. 쿠키(Cookie) 및 추적 기술
+                  4. Cookies and Tracking Technologies
                 </h2>
                 <p>
-                  서비스는 이용자 경험 개선 및 통계 분석을 위해 쿠키를 사용합니다. 쿠키는 웹사이트가
-                  이용자의 브라우저에 저장하는 작은 텍스트 파일입니다.
+                  The Service uses cookies to improve user experience and for statistical analysis.
+                  A cookie is a small text file stored on your browser by the website.
                 </p>
 
                 <h3 className="text-lg font-semibold text-foreground mt-6 mb-3">
-                  4.1 사용되는 서비스
+                  4.1 Third-Party Services Used
                 </h3>
                 <ul className="list-disc pl-6 space-y-2">
                   <li>
-                    <strong>Google Analytics:</strong> 웹사이트 트래픽 분석 및 이용 패턴 파악
-                    <br />
-                    <span className="text-sm text-muted">
-                      자세한 내용:{" "}
-                      <a
-                        href="https://policies.google.com/privacy"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline"
-                      >
-                        Google 개인정보처리방침
-                      </a>
-                    </span>
-                  </li>
-                  <li>
-                    <strong>Google AdSense:</strong> 맞춤형 광고 제공
-                    <br />
-                    <span className="text-sm text-muted">
-                      자세한 내용:{" "}
-                      <a
-                        href="https://policies.google.com/technologies/ads"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline"
-                      >
-                        Google 광고 정책
-                      </a>
-                    </span>
-                  </li>
-                  <li>
-                    <strong>Vercel Analytics:</strong> 웹사이트 성능 모니터링
+                    <strong>Vercel Analytics:</strong> Website performance monitoring
                   </li>
                 </ul>
+                <p className="text-sm text-secondary mt-2">
+                  * Note: We have removed Google Analytics and Google AdSense from our service.
+                </p>
 
-                <h3 className="text-lg font-semibold text-foreground mt-6 mb-3">4.2 쿠키 관리</h3>
+                <h3 className="text-lg font-semibold text-foreground mt-6 mb-3">
+                  4.2 Cookie Management
+                </h3>
                 <p>
-                  이용자는 브라우저 설정을 통해 쿠키 저장을 거부하거나 삭제할 수 있습니다. 단,
-                  쿠키를 비활성화할 경우 일부 서비스 기능이 제한될 수 있습니다.
+                  You can refuse or delete cookies through your browser settings. However, disabling
+                  cookies may limit some service functions.
                 </p>
               </section>
 
-              {/* 개인정보 보유 기간 */}
+              {/* Retention Period */}
               <section>
                 <h2 className="text-xl font-bold text-foreground mb-4">
-                  5. 개인정보 보유 및 이용 기간
+                  5. Retention and Use Period
                 </h2>
                 <p>
-                  자동 수집되는 접속 로그 및 이용 기록은 서비스 운영 및 분석 목적으로 수집일로부터
-                  <strong> 1년간</strong> 보관 후 파기됩니다.
+                  Automatically collected logs and usage records are retained for{" "}
+                  <strong>1 year</strong> for service operation and analysis purposes, and then
+                  destroyed.
                 </p>
                 <p className="mt-3">
-                  단, 관련 법령에 의해 보존이 필요한 경우 해당 법령에서 정한 기간 동안 보관합니다.
+                  However, if preservation is required by relevant laws, we will retain the
+                  information for the period prescribed by such laws.
                 </p>
               </section>
 
-              {/* 제3자 제공 */}
+              {/* Third Party Provision */}
               <section>
-                <h2 className="text-xl font-bold text-foreground mb-4">6. 개인정보의 제3자 제공</h2>
+                <h2 className="text-xl font-bold text-foreground mb-4">
+                  6. Provision to Third Parties
+                </h2>
                 <p>
-                  서비스는 원칙적으로 이용자의 개인정보를 외부에 제공하지 않습니다. 다만, 다음의
-                  경우에는 예외로 합니다:
+                  The Service does not provide your personal information to external parties in
+                  principle. However, exceptions are made in the following cases:
                 </p>
                 <ul className="list-disc pl-6 mt-3 space-y-2">
-                  <li>이용자가 사전에 동의한 경우</li>
+                  <li>With your prior consent</li>
                   <li>
-                    법령의 규정에 의하거나, 수사 목적으로 법령에 정해진 절차와 방법에 따라
-                    수사기관의 요구가 있는 경우
+                    In accordance with the provisions of the law, or upon request of an
+                    investigative agency in accordance with the procedures and methods prescribed by
+                    law for investigation purposes
                   </li>
                 </ul>
               </section>
 
-              {/* 광고 관련 */}
+              {/* User Rights */}
               <section>
-                <h2 className="text-xl font-bold text-foreground mb-4">7. 온라인 맞춤형 광고</h2>
-                <p>
-                  서비스는 Google AdSense를 통해 광고를 게재합니다. Google은 쿠키를 사용하여
-                  이용자의 관심사에 기반한 맞춤형 광고를 표시할 수 있습니다.
-                </p>
-                <p className="mt-3">
-                  맞춤형 광고를 원하지 않는 경우, Google의{" "}
-                  <a
-                    href="https://adssettings.google.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:underline"
-                  >
-                    광고 설정
-                  </a>
-                  에서 비활성화할 수 있습니다.
-                </p>
-              </section>
-
-              {/* 이용자의 권리 */}
-              <section>
-                <h2 className="text-xl font-bold text-foreground mb-4">8. 이용자의 권리</h2>
-                <p>이용자는 언제든지 다음의 권리를 행사할 수 있습니다:</p>
+                <h2 className="text-xl font-bold text-foreground mb-4">7. User Rights</h2>
+                <p>You may exercise the following rights at any time:</p>
                 <ul className="list-disc pl-6 mt-3 space-y-2">
-                  <li>개인정보 열람 요청</li>
-                  <li>개인정보 정정 요청</li>
-                  <li>개인정보 삭제 요청</li>
-                  <li>개인정보 처리 정지 요청</li>
+                  <li>Request for access to personal information</li>
+                  <li>Request for correction of personal information</li>
+                  <li>Request for deletion of personal information</li>
+                  <li>Request for suspension of personal information processing</li>
                 </ul>
-                <p className="mt-4">위 권리 행사는 아래 연락처를 통해 요청하실 수 있습니다.</p>
+                <p className="mt-4">
+                  You can request these rights through the contact information below.
+                </p>
               </section>
 
-              {/* 개인정보 보호책임자 */}
+              {/* Contact */}
               <section>
-                <h2 className="text-xl font-bold text-foreground mb-4">9. 개인정보 보호 및 문의</h2>
+                <h2 className="text-xl font-bold text-foreground mb-4">8. Privacy Contact</h2>
                 <p>
-                  개인정보 처리에 관한 업무를 총괄하며, 관련 문의사항은 아래로 연락해 주시기
-                  바랍니다:
+                  If you have any questions regarding personal information processing, please
+                  contact us at:
                 </p>
                 <div className="mt-4 p-4 bg-surface rounded-lg border border-border">
                   <p>
-                    <strong>이메일:</strong> yaffleria@gmail.com
+                    <strong>Email:</strong> yaffleria@gmail.com
                   </p>
                   <p className="mt-2">
-                    <strong>문의 채널:</strong>{" "}
+                    <strong>Contact Channel:</strong>{" "}
                     <a
                       href="https://x.com/charlotteprism"
                       target="_blank"
@@ -227,52 +191,59 @@ export default function PrivacyPage() {
                 </div>
               </section>
 
-              {/* 아동 보호 */}
-              <section>
-                <h2 className="text-xl font-bold text-foreground mb-4">10. 아동의 개인정보 보호</h2>
-                <p>
-                  본 서비스는 만 14세 미만 아동을 대상으로 하지 않으며, 의도적으로 만 14세 미만
-                  아동의 개인정보를 수집하지 않습니다. 만약 만 14세 미만 아동의 개인정보가 수집된
-                  사실을 인지하게 되면, 해당 정보를 즉시 삭제하겠습니다.
-                </p>
-              </section>
-
-              {/* 개정 */}
+              {/* Children */}
               <section>
                 <h2 className="text-xl font-bold text-foreground mb-4">
-                  11. 개인정보처리방침의 변경
+                  9. Protection of Children
                 </h2>
                 <p>
-                  본 개인정보처리방침은 법령, 정책 또는 서비스 변경 사항을 반영하기 위해 수정될 수
-                  있습니다. 변경 시 웹사이트 공지사항을 통해 안내하며, 변경된 방침은 공지 후 7일
-                  후부터 효력이 발생합니다.
+                  This Service is not intended for children under the age of 14, and we do not
+                  knowingly collect personal information from children under 14. If we become aware
+                  that we have collected personal information from a child under 14, we will delete
+                  it immediately.
                 </p>
               </section>
 
-              {/* 국제 이용자 */}
+              {/* Changes */}
               <section>
-                <h2 className="text-xl font-bold text-foreground mb-4">12. 국제 이용자 안내</h2>
+                <h2 className="text-xl font-bold text-foreground mb-4">
+                  10. Changes to Privacy Policy
+                </h2>
                 <p>
-                  본 서비스는 대한민국에서 운영되며, 대한민국 법률의 적용을 받습니다. 해외에서
-                  서비스를 이용하는 경우, 귀하의 정보가 대한민국의 서버에 저장 및 처리될 수 있음을
-                  인지하시기 바랍니다.
+                  This Privacy Policy may be updated to reflect changes in laws, policies, or the
+                  Service. We will notify you of any changes through the website notice, and the
+                  amended policy will take effect 7 days after the notice.
+                </p>
+              </section>
+
+              {/* International Users */}
+              <section>
+                <h2 className="text-xl font-bold text-foreground mb-4">11. International Users</h2>
+                <p>
+                  This Service is operated in the Republic of Korea and is subject to the laws of
+                  the Republic of Korea. If you use the Service from outside Korea, please be aware
+                  that your information may be transferred to, stored, and processed in Korea.
                 </p>
               </section>
             </div>
 
-            {/* 하단 네비게이션 */}
+            {/* Footer Navigation */}
             <footer className="mt-16 pt-8 border-t border-border text-center">
               <div className="flex flex-wrap justify-center gap-4 text-sm">
                 <Link href="/" className="text-primary hover:underline">
-                  홈으로 돌아가기
+                  Home
                 </Link>
                 <span className="text-muted">|</span>
                 <Link href="/terms" className="text-primary hover:underline">
-                  이용약관
+                  Terms of Service
                 </Link>
                 <span className="text-muted">|</span>
-                <Link href="/about" className="text-primary hover:underline">
-                  서비스 소개
+                <Link href="/disclaimer" className="text-primary hover:underline">
+                  Disclaimer
+                </Link>
+                <span className="text-muted">|</span>
+                <Link href="/contact" className="text-primary hover:underline">
+                  Contact
                 </Link>
               </div>
             </footer>
