@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { GlobalFooter } from "@/widgets/GlobalFooter/GlobalFooter";
@@ -39,20 +39,11 @@ export default function ComparePage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // 데이터 로드
-  useMemo(() => {
-    fetch("/api/portfolio")
-      .then((res) => res.json())
-      .then((d) => {
-        setData(d);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        // fallback: 직접 JSON 로드 시도
-        import("@/shared/data/sec-data.json").then((module) => {
-          setData(module.default as PortfolioQuarter[]);
-          setIsLoading(false);
-        });
-      });
+  useEffect(() => {
+    import("@/shared/data/sec-data.json").then((module) => {
+      setData(module.default as PortfolioQuarter[]);
+      setIsLoading(false);
+    });
   }, []);
 
   // 모든 종목 리스트
