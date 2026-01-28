@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PortfolioQuarter, StockPosition } from "@/entities/portfolio/types";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
-import { StockHistoryChart } from "@/widgets/charts/StockHistoryChart";
+import { StockHistoryChart } from "@/shared/ui/charts/StockHistoryChart";
 import { GlobalHeader } from "@/widgets/GlobalHeader/GlobalHeader";
 import { FadeIn } from "@/shared/ui/FadeIn";
 import { ShareButton } from "@/shared/ui/ShareButton";

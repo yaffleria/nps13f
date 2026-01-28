@@ -1,26 +1,20 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { StockPosition, PortfolioQuarter } from "@/entities/portfolio/types";
 import { formatCompactNumber, formatNumber } from "@/shared/lib/format";
 import { ChevronUp, ChevronDown, ChevronsUpDown, History } from "lucide-react";
 import { Modal } from "@/shared/ui/Modal";
-import { StockHistoryChart } from "@/widgets/charts/StockHistoryChart";
+import { StockHistoryChart } from "@/shared/ui/charts/StockHistoryChart";
+import { useStockCalculations, EnrichedStock } from "./hooks/useStockCalculations";
+import { useSortableTable, SortField, SortState } from "./hooks/useSortableTable";
 
 interface SortableHoldingsTableProps {
   holdings: StockPosition[];
   totalValue: number;
   previousQuarterHoldings?: StockPosition[];
   quarters?: PortfolioQuarter[];
-}
-
-type SortField = "symbol" | "name" | "percent" | "shares" | "price" | "value" | "change";
-type SortDirection = "asc" | "desc";
-
-interface SortState {
-  field: SortField;
-  direction: SortDirection;
 }
 
 const SortIcon = ({ field, currentSort }: { field: SortField; currentSort: SortState }) => {
@@ -70,85 +64,49 @@ export function SortableHoldingsTable({
   previousQuarterHoldings,
   quarters,
 }: SortableHoldingsTableProps) {
-  const [sort, setSort] = useState<SortState>({ field: "percent", direction: "desc" });
-  const [itemsPerPage, setItemsPerPage] = useState(20);
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedStock, setSelectedStock] = useState<{ symbol: string; name: string } | null>(null);
 
-  const prevHoldingsMap = useMemo(() => {
-    if (!previousQuarterHoldings) return new Map<string, StockPosition>();
-    return new Map(previousQuarterHoldings.map((h) => [h.cusip, h]));
-  }, [previousQuarterHoldings]);
+  const enrichedHoldings = useStockCalculations({
+    holdings,
+    totalValue,
+    previousQuarterHoldings,
+  });
 
-  const enrichedHoldings = useMemo(() => {
-    return holdings.map((stock) => {
-      const actualValue = stock.value / 1000;
-      const reportedPrice = actualValue / stock.shares;
-      const percent = (stock.value / totalValue) * 100;
-      const prevStock = prevHoldingsMap.get(stock.cusip);
-      const prevShares = prevStock?.shares || 0;
-      const sharesChange = prevStock ? stock.shares - prevShares : stock.shares;
-      const portfolioChange = prevStock
-        ? (stock.value / totalValue) * 100 - (prevStock.value / totalValue) * 100
-        : (stock.value / totalValue) * 100;
-
-      return {
-        ...stock,
-        value: actualValue,
-        reportedPrice,
-        percent,
-        sharesChange,
-        portfolioChange,
-        isNew: !prevStock,
-      };
-    });
-  }, [holdings, totalValue, prevHoldingsMap]);
-
-  const sortedHoldings = useMemo(() => {
-    return [...enrichedHoldings].sort((a, b) => {
-      let compareResult = 0;
-      switch (sort.field) {
-        case "symbol":
-          compareResult = a.symbol.localeCompare(b.symbol);
-          break;
-        case "name":
-          compareResult = a.securityName.localeCompare(b.securityName);
-          break;
-        case "percent":
-          compareResult = a.percent - b.percent;
-          break;
-        case "shares":
-          compareResult = a.shares - b.shares;
-          break;
-        case "price":
-          compareResult = a.reportedPrice - b.reportedPrice;
-          break;
-        case "value":
-          compareResult = a.value - b.value;
-          break;
-        case "change":
-          compareResult = a.portfolioChange - b.portfolioChange;
-          break;
-        default:
-          compareResult = 0;
-      }
-      return sort.direction === "asc" ? compareResult : -compareResult;
-    });
-  }, [enrichedHoldings, sort]);
-
-  const totalPages = Math.ceil(sortedHoldings.length / itemsPerPage);
-  const paginatedHoldings = useMemo(() => {
-    const start = (currentPage - 1) * itemsPerPage;
-    return sortedHoldings.slice(start, start + itemsPerPage);
-  }, [sortedHoldings, currentPage, itemsPerPage]);
-
-  const handleSort = (field: SortField) => {
-    setSort((prev) => ({
-      field,
-      direction: prev.field === field && prev.direction === "desc" ? "asc" : "desc",
-    }));
-    setCurrentPage(1);
+  const sortFn = (a: EnrichedStock, b: EnrichedStock, field: SortField): number => {
+    switch (field) {
+      case "symbol":
+        return a.symbol.localeCompare(b.symbol);
+      case "name":
+        return a.securityName.localeCompare(b.securityName);
+      case "percent":
+        return a.percent - b.percent;
+      case "shares":
+        return a.shares - b.shares;
+      case "price":
+        return a.reportedPrice - b.reportedPrice;
+      case "value":
+        return a.value - b.value;
+      case "change":
+        return a.portfolioChange - b.portfolioChange;
+      default:
+        return 0;
+    }
   };
+
+  const {
+    sortedData: sortedHoldings,
+    paginatedData: paginatedHoldings,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    sort,
+    setCurrentPage,
+    setItemsPerPage,
+    handleSort,
+  } = useSortableTable({
+    data: enrichedHoldings,
+    sortFn,
+  });
 
   return (
     <div className="space-y-4">
@@ -286,7 +244,6 @@ export function SortableHoldingsTable({
               value={itemsPerPage}
               onChange={(e) => {
                 setItemsPerPage(Number(e.target.value));
-                setCurrentPage(1);
               }}
               className="bg-surface border border-border rounded-lg px-2 py-1 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
